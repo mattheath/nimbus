@@ -7,11 +7,14 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
     <script src="js/three.min.js"></script>
+    <script src="js/stats.min.js"></script>
   </head>
 
   <body>
 
 <script>
+
+      var container, stats;
 
       var camera, scene, renderer;
       var geometry, material, mesh;
@@ -20,6 +23,9 @@
       animate();
 
       function init() {
+
+          container = document.createElement( 'div' );
+          document.body.appendChild( container );
 
           camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, - 500, 1000 );
           camera.position.x = 200;
@@ -67,6 +73,13 @@
           renderer.setSize( window.innerWidth, window.innerHeight );
 
           document.body.appendChild( renderer.domElement );
+
+          stats = new Stats();
+          stats.domElement.style.position = 'absolute';
+          stats.domElement.style.top = '0px';
+          container.appendChild( stats.domElement );
+
+
 
       }
 
