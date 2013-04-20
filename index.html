@@ -195,7 +195,7 @@
           // Cube
 
           geometry = new THREE.CubeGeometry( width, height, width );
-          cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xEBEBEC, wireframe: false, opacity: opacity } );
+          cubeMaterial = new THREE.MeshBasicMaterial( { color: 0xE6E6E6, wireframe: false, opacity: opacity } );
           mesh = new THREE.Mesh( geometry, cubeMaterial );
           mesh.position.x = x;
           mesh.position.y = y;
