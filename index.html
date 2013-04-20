@@ -69,7 +69,7 @@
 
           // Grid
 
-          var size = 500, step = 50;
+          var size = 750, step = 75;
 
           var geometry = new THREE.Geometry();
 
@@ -89,27 +89,36 @@
           line.type = THREE.LinePieces;
           scene.add( line );
 
-          createCube(scene, 50, 28.5, 75, 75);
-          createCube(scene, 50, 45, 175, 75);
-
-          createCube(scene, 50, 45, 275, 75);
-
-          createCube(scene, 50, 28.5, 375, 75);
-
-          createCube(scene, 50, 28.5, 75, 175);
-          createCube(scene, 50, 45, 175, 175);
-
-          createCube(scene, 50, 45, 275, 175);
-
-          createCube(scene, 50, 28.5, 375, 175);
 
 
-          createCube(scene, 50, 28.5, 75, 275);
-          createCube(scene, 50, 45, 175, 275);
+          var pointLight =
+          new THREE.PointLight(0xFFFFFF);
 
-          createCube(scene, 50, 45, 275, 275);
+          // set its position
+          pointLight.position.x = 500;
+          pointLight.position.y = 500;
+          pointLight.position.z = 500;
 
-          createCube(scene, 50, 28.5, 375, 275);
+          // add to the scene
+          scene.add(pointLight);
+
+          var ambientLight = new THREE.AmbientLight(0x555555);
+          scene.add(ambientLight);
+
+          // Cubes
+
+          createCube(scene, 75, 42.75, 75, -75);
+          createCube(scene, 75, 67.5, 175, -75);
+          createCube(scene, 75, 67.5, 275, -75);
+          createCube(scene, 75, 42.75, 375, -75);
+          createCube(scene, 75, 42.75, 75, 175);
+          createCube(scene, 75, 67.5, 175, 175);
+          createCube(scene, 75, 67.5, 275, 175);
+          createCube(scene, 75, 42.75, 375, 175);
+          createCube(scene, 75, 42.75, 75, 275);
+          createCube(scene, 75, 67.5, 175, 275);
+          createCube(scene, 75, 67.5, 275, 275);
+          createCube(scene, 75, 90, 375, 275);
 
           // point indicator
           /*
@@ -177,7 +186,7 @@
           //var z = 75;
 
           geometry = new THREE.CubeGeometry( width, height, width );
-          cubeMaterial = new THREE.MeshBasicMaterial( { color: 0xEBEBEC, wireframe: false } );
+          cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xEBEBEC, wireframe: false } );
           mesh = new THREE.Mesh( geometry, cubeMaterial );
           mesh.position.x = x;
           mesh.position.y = y;
