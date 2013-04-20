@@ -91,46 +91,47 @@
 
           // Cube 1
 
-          geometry = new THREE.CubeGeometry( 50, 28.5, 50 );
-          cubeMaterial = new THREE.MeshBasicMaterial( { color: 0xEBEBEC, wireframe: false, opacity: 1 } );
+          var cubeWidth = 50;
+          var cubeHeight = 28.5;
+          var cubePosX = 75;
+          var cubePosY = cubeHeight / 2;
+          var cubePosZ = 75;
 
+          geometry = new THREE.CubeGeometry( cubeWidth, cubeHeight, cubeWidth );
+          cubeMaterial = new THREE.MeshBasicMaterial( { color: 0xEBEBEC, wireframe: false } );
           mesh = new THREE.Mesh( geometry, cubeMaterial );
-
-          mesh.position.x = 25;
-          mesh.position.y = 14.25;
-          mesh.position.z = 25;
-
+          mesh.position.x = cubePosX;
+          mesh.position.y = cubePosY;
+          mesh.position.z = cubePosZ;
           scene.add( mesh );
 
           // Outline
 
-          var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 5 });
-
           var geometry = new THREE.Geometry();
-          geometry.vertices.push(new THREE.Vector3(50, 0, 0));
-          geometry.vertices.push(new THREE.Vector3(50, 28.5, 0));
-          geometry.vertices.push(new THREE.Vector3(0, 28.5, 0));
-          geometry.vertices.push(new THREE.Vector3(0, 28.5, 50));
-          geometry.vertices.push(new THREE.Vector3(0, 0, 50));
-          geometry.vertices.push(new THREE.Vector3(50, 0, 50));
-          geometry.vertices.push(new THREE.Vector3(50, 0, 0));
+          geometry.vertices.push(new THREE.Vector3(cubePosX + cubeWidth/2, cubePosY - cubeHeight/2, cubePosZ - cubeWidth/2)); // Bottom right corner
+          geometry.vertices.push(new THREE.Vector3(cubePosX + cubeWidth/2, cubePosY + cubeHeight/2, cubePosZ - cubeWidth/2)); // Top right corner
+          geometry.vertices.push(new THREE.Vector3(cubePosX - cubeWidth/2, cubePosY + cubeHeight/2, cubePosZ - cubeWidth/2)); // Top back corner
+          geometry.vertices.push(new THREE.Vector3(cubePosX - cubeWidth/2, cubePosY + cubeHeight/2, cubePosZ + cubeWidth/2)); // Top left corner
+          geometry.vertices.push(new THREE.Vector3(cubePosX - cubeWidth/2, cubePosY - cubeHeight/2, cubePosZ + cubeWidth/2)); // Bottom left corner
+          geometry.vertices.push(new THREE.Vector3(cubePosX + cubeWidth/2, cubePosY - cubeHeight/2, cubePosZ + cubeWidth/2)); // Bottom front corner
+          geometry.vertices.push(new THREE.Vector3(cubePosX + cubeWidth/2, cubePosY - cubeHeight/2, cubePosZ - cubeWidth/2)); // Bottom right corner
 
+          var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 6 });
           var line = new THREE.Line(geometry, lineMaterial);
-
           scene.add(line);
 
-          // inner line
-
-          var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 1 });
+          // Inner lines
 
           var geometry = new THREE.Geometry();
-          geometry.vertices.push(new THREE.Vector3(50.1, 0.1, 50.1));
-          geometry.vertices.push(new THREE.Vector3(50.1, 28.51, 50.1));
-          geometry.vertices.push(new THREE.Vector3(0.1, 28.51, 50.1));
-          geometry.vertices.push(new THREE.Vector3(50.1, 28.51, 50.1));
-          geometry.vertices.push(new THREE.Vector3(50.1, 28.51, 0.1));
-          var line = new THREE.Line(geometry, lineMaterial);
+          var clipBufferAmount = 0.1;
+          geometry.vertices.push(new THREE.Vector3(cubePosX + cubeWidth/2 + clipBufferAmount, cubePosY - cubeHeight/2 + clipBufferAmount, cubePosZ + cubeWidth/2 + clipBufferAmount));
+          geometry.vertices.push(new THREE.Vector3(cubePosX + cubeWidth/2 + clipBufferAmount, cubePosY + cubeHeight/2 + clipBufferAmount, cubePosZ + cubeWidth/2 + clipBufferAmount));
+          geometry.vertices.push(new THREE.Vector3(cubePosX - cubeWidth/2 + clipBufferAmount, cubePosY + cubeHeight/2 + clipBufferAmount, cubePosZ + cubeWidth/2 + clipBufferAmount));
+          geometry.vertices.push(new THREE.Vector3(cubePosX + cubeWidth/2 + clipBufferAmount, cubePosY + cubeHeight/2 + clipBufferAmount, cubePosZ + cubeWidth/2 + clipBufferAmount));
+          geometry.vertices.push(new THREE.Vector3(cubePosX + cubeWidth/2 + clipBufferAmount, cubePosY + cubeHeight/2 + clipBufferAmount, cubePosZ - cubeWidth/2 + clipBufferAmount));
 
+          var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 2 });
+          var line = new THREE.Line(geometry, lineMaterial);
           scene.add(line);
 
 
