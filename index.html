@@ -176,7 +176,7 @@
 
       }
 
-      function createCube(scene, width, height, x, y, z) {
+      function createCube(scene, width, height, x, y, z, opacity) {
 
           // Defaults
           //var width = 50;
@@ -187,13 +187,15 @@
           // Sit this on the plane
           y = y + height / 2;
 
+          opacity = opacity || 1;
+
           // Container object
           cube = new THREE.Object3D();//create an empty container
 
           // Cube
 
           geometry = new THREE.CubeGeometry( width, height, width );
-          cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xEBEBEC, wireframe: false } );
+          cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xEBEBEC, wireframe: false, opacity: opacity } );
           mesh = new THREE.Mesh( geometry, cubeMaterial );
           mesh.position.x = x;
           mesh.position.y = y;
@@ -245,7 +247,7 @@
           squareGeometry.vertices.push(new THREE.Vector3(-1 * squareSize, 0, -1 * squareSize));
           squareGeometry.faces.push(new THREE.Face4(0, 1, 2, 3));
 
-          var squareMaterial = new THREE.MeshBasicMaterial( { color: 0x707071, side: THREE.DoubleSide } );
+          var squareMaterial = new THREE.MeshBasicMaterial( { color: 0x707071, side: THREE.DoubleSide, opacity: opacity } );
           var squareMesh = new THREE.Mesh(squareGeometry, squareMaterial);
           squareMesh.position.set(squarePosX, squarePosY, squarePosZ);
           cube.add( squareMesh );
