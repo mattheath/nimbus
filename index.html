@@ -136,7 +136,7 @@
           scene.add( mesh );
           */
 
-          renderer = new THREE.CanvasRenderer();
+          renderer = new THREE.WebGLRenderer( { antialias: true } );
           renderer.setSize( window.innerWidth, window.innerHeight );
 
           document.body.appendChild( renderer.domElement );
@@ -195,7 +195,7 @@
           // Cube
 
           geometry = new THREE.CubeGeometry( width, height, width );
-          cubeMaterial = new THREE.MeshBasicMaterial( { color: 0xE6E6E6, wireframe: false, opacity: opacity } );
+          cubeMaterial = new THREE.MeshBasicMaterial( { color: 0xE6E6E6, wireframe: false, opacity: opacity, transparent: true } );
           mesh = new THREE.Mesh( geometry, cubeMaterial );
           mesh.position.x = x;
           mesh.position.y = y;
@@ -261,7 +261,7 @@
           squareGeometry.vertices.push(new THREE.Vector3(-1 * squareSize, 0, -1 * squareSize));
           squareGeometry.faces.push(new THREE.Face4(0, 1, 2, 3));
 
-          var squareMaterial = new THREE.MeshBasicMaterial( { color: 0x707071, side: THREE.DoubleSide, opacity: opacity } );
+          var squareMaterial = new THREE.MeshBasicMaterial( { color: 0x707071, side: THREE.DoubleSide, opacity: opacity, transparent: true } );
           var squareMesh = new THREE.Mesh(squareGeometry, squareMaterial);
           squareMesh.position.set(squarePosX, squarePosY, squarePosZ);
           cube.add( squareMesh );
