@@ -226,6 +226,27 @@
           var line = new THREE.Line(geometry, lineMaterial);
           cube.add(line);
 
+          // Add square logo to top of the cube
+
+          // Calculate size & position of the square, relative to the cube size
+          var squareSize = width * 0.1333333333;
+          var squareBorderSpacing = squareSize * 0.6;
+          var squarePosX = x + width / 2 - squareSize - squareBorderSpacing;
+          var squarePosY = y + clipBufferAmount + height / 2;
+          var squarePosZ = z + width / 2 - squareSize - squareBorderSpacing;
+
+          var squareGeometry = new THREE.Geometry();
+          squareGeometry.vertices.push(new THREE.Vector3(-1 * squareSize, 0, squareSize));
+          squareGeometry.vertices.push(new THREE.Vector3(squareSize, 0,  squareSize));
+          squareGeometry.vertices.push(new THREE.Vector3(squareSize, 0, -1 * squareSize));
+          squareGeometry.vertices.push(new THREE.Vector3(-1 * squareSize, 0, -1 * squareSize));
+          squareGeometry.faces.push(new THREE.Face4(0, 1, 2, 3));
+
+          var squareMaterial = new THREE.MeshBasicMaterial( { color: 0x707071, side: THREE.DoubleSide } );
+          var squareMesh = new THREE.Mesh(squareGeometry, squareMaterial);
+          squareMesh.position.set(squarePosX, squarePosY, squarePosZ);
+          cube.add( squareMesh );
+
           // Add cube object to the scene
           scene.add( cube );
 
