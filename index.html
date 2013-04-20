@@ -184,13 +184,18 @@
           var y = height / 2; // Sit this on the plane
           //var z = 75;
 
+          // Container object
+          cube = new THREE.Object3D();//create an empty container
+
+          // Cube
+
           geometry = new THREE.CubeGeometry( width, height, width );
           cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xEBEBEC, wireframe: false } );
           mesh = new THREE.Mesh( geometry, cubeMaterial );
           mesh.position.x = x;
           mesh.position.y = y;
           mesh.position.z = z;
-          scene.add( mesh );
+          cube.add( mesh );
 
           // Outline
 
@@ -205,7 +210,7 @@
 
           var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 6 });
           var line = new THREE.Line(geometry, lineMaterial);
-          scene.add(line);
+          cube.add(line);
 
           // Inner lines
 
@@ -219,7 +224,10 @@
 
           var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 2 });
           var line = new THREE.Line(geometry, lineMaterial);
-          scene.add(line);
+          cube.add(line);
+
+          // Add cube object to the scene
+          scene.add( cube );
 
       }
 
