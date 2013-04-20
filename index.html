@@ -58,16 +58,62 @@
 
           // Cube 1
 
-          geometry = new THREE.CubeGeometry( 50, 25, 50 );
-          cubeMaterial = new THREE.MeshBasicMaterial( { color: 0x333333, wireframe: true } );
+          geometry = new THREE.CubeGeometry( 50, 28.5, 50 );
+          cubeMaterial = new THREE.MeshBasicMaterial( { color: 0xEBEBEC, wireframe: false, opacity: 1 } );
 
           mesh = new THREE.Mesh( geometry, cubeMaterial );
 
           mesh.position.x = 25;
-          mesh.position.y = 12.5;
+          mesh.position.y = 14.25;
           mesh.position.z = 25;
 
           scene.add( mesh );
+
+          // Outline
+
+          var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 5 });
+
+          var geometry = new THREE.Geometry();
+          geometry.vertices.push(new THREE.Vector3(50, 0, 0));
+          geometry.vertices.push(new THREE.Vector3(50, 28.5, 0));
+          geometry.vertices.push(new THREE.Vector3(0, 28.5, 0));
+          geometry.vertices.push(new THREE.Vector3(0, 28.5, 50));
+          geometry.vertices.push(new THREE.Vector3(0, 0, 50));
+          geometry.vertices.push(new THREE.Vector3(50, 0, 50));
+          geometry.vertices.push(new THREE.Vector3(50, 0, 0));
+
+          var line = new THREE.Line(geometry, lineMaterial);
+
+          scene.add(line);
+
+          // inner line
+
+          var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 1 });
+
+          var geometry = new THREE.Geometry();
+          geometry.vertices.push(new THREE.Vector3(50.1, 0.1, 50.1));
+          geometry.vertices.push(new THREE.Vector3(50.1, 28.51, 50.1));
+          geometry.vertices.push(new THREE.Vector3(0.1, 28.51, 50.1));
+          geometry.vertices.push(new THREE.Vector3(50.1, 28.51, 50.1));
+          geometry.vertices.push(new THREE.Vector3(50.1, 28.51, 0.1));
+          var line = new THREE.Line(geometry, lineMaterial);
+
+          scene.add(line);
+
+
+          // point indicator
+          /*
+          geometry = new THREE.CubeGeometry( 5, 5, 5 );
+          cubeMaterial = new THREE.MeshBasicMaterial( { color: 0xCC0000, wireframe: false, opacity: 1 } );
+
+          mesh = new THREE.Mesh( geometry, cubeMaterial );
+
+          mesh.position.x = 50;
+          mesh.position.y = 25;
+          mesh.position.z = 50;
+
+          scene.add( mesh );
+          */
 
           renderer = new THREE.CanvasRenderer();
           renderer.setSize( window.innerWidth, window.innerHeight );
