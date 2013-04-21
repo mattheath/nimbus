@@ -105,8 +105,14 @@ function createOctagon(scene, width, height, x, y, z, opacity) {
      // Adjust registration point to bottom of object
      y = y + height / 2;
 
+     // Default opacity to non-transparent
+     opacity = opacity || 1;
+
+     // Amount to separate objects by to ensure no clipping
+     var clipBufferAmount = 0.3;
+
+     // Calculate distance from edge of a cube the octagonal side starts
      var cornerRadius = (width - (width / (1 + Math.sqrt(2)))) / 2;
-     console.log(cornerRadius);
 
      // Boundaries
      var xMin = x - width / 2;
