@@ -16,8 +16,13 @@
 
       var container, stats;
 
-      var camera, scene, renderer;
+      var camera, controls, scene, projector, renderer;
       var geometry, material, mesh;
+      var objects = [], plane;
+
+      var mouse = new THREE.Vector2(),
+      offset = new THREE.Vector3(),
+      INTERSECTED, SELECTED;
 
       init();
       animate();
@@ -34,8 +39,14 @@
           container = document.createElement( 'div' );
           document.body.appendChild( container );
 
-          camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, - 500, 1000 );
+          //camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, - 500, 1000 );
+
+          camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 2000);
+
+
           scene = new THREE.Scene();
+
+
 
           // X AXIS IS RED
           var lineMaterial = new THREE.LineBasicMaterial({ color: 0xCC0000, linewidth: 5 });
@@ -76,14 +87,7 @@
           line.type = THREE.LinePieces;
           scene.add( line );
 
-          // set its position
-          pointLight.position.x = 500;
-          pointLight.position.y = 500;
-          pointLight.position.z = 500;
-
-          // add to the scene
-          scene.add(pointLight);
-
+          // Add some ambient light
           var ambientLight = new THREE.AmbientLight(0x555555);
           scene.add(ambientLight);
 
@@ -91,6 +95,8 @@
 
           createCube(scene, 75, 42.75, 75, 0, -75, 0.6);
           createCube(scene, 75, 67.5, 175, 0, -75);
+
+
           createCube(scene, 75, 67.5, 275, 0, -75);
           createCube(scene, 75, 42.75, 375, 0, -75);
           createCube(scene, 75, 42.75, 75, 0, 175);
@@ -119,6 +125,12 @@
           scene.add( mesh );
           */
 
+          //plane = new THREE.Mesh( new THREE.PlaneGeometry( 5000, 5000, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.25, transparent: true, wireframe: true } ) );
+          //plane.visible = false;
+          //scene.add( plane );
+
+          projector = new THREE.Projector();
+
           renderer = new THREE.WebGLRenderer( { antialias: true } );
           renderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -129,13 +141,27 @@
           stats.domElement.style.top = '0px';
           container.appendChild( stats.domElement );
 
+          renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
+
+          window.addEventListener( 'resize', onWindowResize, false );
+
+      }
+
+      function onWindowResize() {
+
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        render();
+
       }
 
       function animate() {
         var elapsed = Date.now() - start;
         if (elapsed > duration * 1000) {
-          console.log("skipped")
-          return;
+          //console.log("skipped")
+          //return;
         }
 
         requestAnimationFrame( animate );
@@ -151,6 +177,15 @@
         camera.position.x = 120; //Math.cos( timer ) * 200;
         camera.position.y = 94;
         camera.position.z = 120; //Math.sin( timer ) * 200;
+
+
+
+        camera.position.x = 800; //Math.cos( timer ) * 200;
+        camera.position.y = 500;
+        camera.position.z = 800; //Math.sin( timer ) * 200;
+
+
+
         camera.lookAt( scene.position );
 
         renderer.render( scene, camera );
@@ -171,17 +206,17 @@
           opacity = opacity || 1;
 
           // Container object
-          cube = new THREE.Object3D();//create an empty container
+          var cube = new THREE.Object3D(); //create an empty container
 
           // Cube
 
-          geometry = new THREE.CubeGeometry( width, height, width );
-          cubeMaterial = new THREE.MeshBasicMaterial( { color: 0xE6E6E6, wireframe: false, opacity: opacity, transparent: true } );
-          mesh = new THREE.Mesh( geometry, cubeMaterial );
-          mesh.position.x = x;
-          mesh.position.y = y;
-          mesh.position.z = z;
-          cube.add( mesh );
+          var geometry = new THREE.CubeGeometry( width, height, width );
+          var cubeMaterial = new THREE.MeshBasicMaterial( { color: 0xE6E6E6, wireframe: false, opacity: opacity, transparent: true } );
+          var cubeMesh = new THREE.Mesh( geometry, cubeMaterial );
+          cubeMesh.position.x = x;
+          cubeMesh.position.y = y;
+          cubeMesh.position.z = z;
+          cube.add( cubeMesh );
 
           // Outline
 
@@ -232,7 +267,7 @@
           var squareSize = width * 0.1333333333;
           var squareBorderSpacing = squareSize * 0.6;
           var squarePosX = x + width / 2 - squareSize - squareBorderSpacing;
-          var squarePosY = y + clipBufferAmount + height / 2;
+          var squarePosY = y + clipBufferAmount*2 + height / 2;
           var squarePosZ = z + width / 2 - squareSize - squareBorderSpacing;
 
           var squareGeometry = new THREE.Geometry();
@@ -250,7 +285,73 @@
           // Add cube object to the scene
           scene.add( cube );
 
+          // and our list of objects
+          objects.push( cubeMesh );
+
       }
+
+
+      function onDocumentMouseMove( event ) {
+
+        event.preventDefault();
+
+        mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+        //
+
+        console.log (mouse.x + " " + mouse.y)
+
+        var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
+        projector.unprojectVector( vector, camera );
+
+        var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
+
+        if ( SELECTED ) {
+
+          var intersects = raycaster.intersectObject( plane );
+          SELECTED.position.copy( intersects[ 0 ].point.sub( offset ) );
+          return;
+
+        }
+
+
+        var intersects = raycaster.intersectObjects( objects, true );
+
+        console.log(intersects)
+
+        if ( intersects.length > 0 ) {
+
+          console.log('yup!');
+
+          if ( INTERSECTED != intersects[ 0 ].object ) {
+
+            if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+
+            INTERSECTED = intersects[ 0 ].object;
+            INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+
+            INTERSECTED.material.color.setHex(130000)
+
+            plane.position.copy( INTERSECTED.position );
+            plane.lookAt( camera.position );
+
+          }
+
+          container.style.cursor = 'pointer';
+
+        } else {
+
+          if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+
+          INTERSECTED = null;
+
+          container.style.cursor = 'auto';
+
+        }
+
+      }
+
 
     </script>
   </body>
