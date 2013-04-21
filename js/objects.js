@@ -112,7 +112,12 @@ function createOctagon(scene, width, height, x, y, z, opacity) {
      var clipBufferAmount = 0.5;
 
      // Calculate distance from edge of a cube the octagonal side starts
+
+     // This gives a true octagonal prism
      var cornerRadius = (width - (width / (1 + Math.sqrt(2)))) / 2;
+
+     // Adjust to match ELB shape
+     cornerRadius = cornerRadius * 0.85;
 
      // Boundaries
      var xMin = x - width / 2;
@@ -306,6 +311,15 @@ function createOctagon(scene, width, height, x, y, z, opacity) {
      innerLine.vertices.push(new THREE.Vector3(clipPos[4].x, clipPos[4].y, clipPos[4].z));
      var line = new THREE.Line(innerLine, lineMaterial);
      octagon.add(line);
+
+     // How about an ELB logo
+
+     // Calculate size & position of the circle, relative to the cube size
+     var radius = (width * 0.7) / 2;
+     var circleMaterial = new THREE.MeshBasicMaterial( { color: 0x707071, side: THREE.DoubleSide, opacity: opacity, transparent: true } );
+     var circleMesh = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, 0, 50, 50), circleMaterial);
+     circleMesh.position.set(x, yMax + clipBufferAmount, z);
+     octagon.add( circleMesh );
 
 
      // We're done!
