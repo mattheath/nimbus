@@ -116,6 +116,11 @@ function createOctagon(scene, width, height, x, y, z, opacity) {
      var yMin = y;
      var yMax = y + height;
 
+     var posX = x + width / 2;
+     var posY = y + 5;
+     var posZ = z + width / 2;
+
+
      // Calculate vertices
      var v0 = new THREE.Vector3(xMax - cornerRadius, yMin, zMin);
      var v1 = new THREE.Vector3(xMin + cornerRadius, yMin, zMin);
@@ -180,12 +185,10 @@ function createOctagon(scene, width, height, x, y, z, opacity) {
      geometry.faces.push(new THREE.Face4(6, 7, 15, 14));
      geometry.faces.push(new THREE.Face4(7, 0, 8, 15));
 
+     var octagonMaterial = new THREE.MeshBasicMaterial( { color: 0xE6E6E6, side: THREE.DoubleSide, opacity: opacity, transparent: true } );
+     var mesh = new THREE.Mesh(geometry, octagonMaterial);
+     octagon.add( mesh );
 
-     console.log(v1);
-     console.log(xMin);
-     console.log(xMax);
-     console.log(zMin);
-     console.log(zMax);
 
      // Outline
 
@@ -210,23 +213,9 @@ function createOctagon(scene, width, height, x, y, z, opacity) {
      cubeGeometry = new THREE.CubeGeometry( 5, 5, 5 );
      cubeMaterial = new THREE.MeshBasicMaterial( { color: 0xCC0000, wireframe: false, opacity: 1 } );
      cubeMesh = new THREE.Mesh( cubeGeometry, cubeMaterial );
-     cubeMesh.position.x = v4.x;
-     cubeMesh.position.y = v4.y;
-     cubeMesh.position.z = v4.z;
+     cubeMesh.position.set(v4.x, v4.y, v4.z);
      scene.add( cubeMesh );
 
-
-     console.log(geometry);
-
-
-     var posX = x + width / 2;
-     var posY = y + 5;
-     var posZ = z + width / 2;
-
-     var material = new THREE.MeshBasicMaterial( { color: 0xE6E6E6, side: THREE.DoubleSide, opacity: opacity, transparent: true } );
-     var mesh = new THREE.Mesh(geometry, material);
-     mesh.position.set(posX, posY, posZ);
-     octagon.add( mesh );
 
 
      console.log(octagon);
