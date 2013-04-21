@@ -67,7 +67,6 @@
             geometry.vertices.push( new THREE.Vector3(   size, 0, i ) );
             geometry.vertices.push( new THREE.Vector3( i, 0, - size ) );
             geometry.vertices.push( new THREE.Vector3( i, 0,   size ) );
-
           }
           var gridMaterial = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.1 } );
           var line = new THREE.Line( geometry, gridMaterial );
@@ -80,23 +79,35 @@
 
           // Cubes
 
-          createCube(scene, 75, 42.75, 75, 0, -75, 0.6);
-          createCube(scene, 75, 67.5, 175, 0, -75);
+          var cube = createCube(75, 42.75, 75, 0, -75, 0.6);
+
+          // Add cube object to the scene
+          scene.add( cube );
+
+          // and our list of objects for intersection mapping
+          _.each(cube.children, function(child) {
+            if (child instanceof THREE.Mesh) {
+              objects.push(child)
+            }
+          });
+
+/*
+          var cube = createCube(75, 67.5, 175, 0, -75);
 
 
-          createCube(scene, 75, 67.5, 275, 0, -75);
-          createCube(scene, 75, 42.75, 375, 0, -75);
-          createCube(scene, 75, 42.75, 75, 0, 175);
-          createCube(scene, 75, 67.5, 175, 0, 175);
-          createCube(scene, 75, 67.5, 275, 0, 175);
-          createCube(scene, 75, 42.75, 375, 0, 175);
+          var cube = createCube(75, 67.5, 275, 0, -75);
+          var cube = createCube(75, 42.75, 375, 0, -75);
+          var cube = createCube(75, 42.75, 75, 0, 175);
+          var cube = createCube(75, 67.5, 175, 0, 175);
+          var cube = createCube(75, 67.5, 275, 0, 175);
+          var cube = createCube(75, 42.75, 375, 0, 175);
 
-          createCube(scene, 75, 37.5, 75, 0, 275);
-          createCube(scene, 75, 42.75, 175, 0, 275, 0.6);
-          createCube(scene, 75, 67.5, 275, 0, 275, 0.6);
-          createCube(scene, 75, 90, 375, 0, 275);
+          var cube = createCube(75, 37.5, 75, 0, 275);
+          var cube = createCube(75, 42.75, 175, 0, 275, 0.6);
+          var cube = createCube(75, 67.5, 275, 0, 275, 0.6);
+          var cube = createCube(75, 90, 375, 0, 275);
 
-          createCube(scene, 75, 75, -175, 0, 275, 0.6);
+          var cube = createCube(75, 75, -175, 0, 275, 0.6);
 
           // point indicator
           /*
@@ -225,8 +236,8 @@
 
             INTERSECTED.material.color.setHex(130000)
 
-            plane.position.copy( INTERSECTED.position );
-            plane.lookAt( camera.position );
+            //plane.position.copy( INTERSECTED.position );
+            //plane.lookAt( camera.position );
 
           }
 
