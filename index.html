@@ -200,10 +200,6 @@
         mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
         mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
-        //
-
-        console.log (mouse.x + " " + mouse.y)
-
         var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
         projector.unprojectVector( vector, camera );
 
@@ -220,11 +216,9 @@
 
         var intersects = raycaster.intersectObjects( objects, true );
 
-        console.log(intersects)
-
         if ( intersects.length > 0 ) {
 
-          console.log('yup!');
+          console.log('intersected object!');
 
           if ( INTERSECTED != intersects[ 0 ].object ) {
 
@@ -234,9 +228,6 @@
             INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
 
             INTERSECTED.material.color.setHex(130000)
-
-            //plane.position.copy( INTERSECTED.position );
-            //plane.lookAt( camera.position );
 
           }
 
