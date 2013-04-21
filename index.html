@@ -9,6 +9,8 @@
     <script src="js/three.min.js"></script>
     <script src="js/stats.min.js"></script>
 
+    <script src="js/locus.js"></script>
+
     <link href="css/reset.css" rel="stylesheet">
 
 
@@ -44,37 +46,12 @@
           document.body.appendChild( container );
 
           //camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, - 500, 1000 );
-
           camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 2000);
-
-
           scene = new THREE.Scene();
 
+          // Mark the origin
 
-
-          // X AXIS IS RED
-          var lineMaterial = new THREE.LineBasicMaterial({ color: 0xCC0000, linewidth: 5 });
-          var geometry = new THREE.Geometry();
-          geometry.vertices.push(new THREE.Vector3(0,0,0));
-          geometry.vertices.push(new THREE.Vector3(500, 0, 0));
-          var line = new THREE.Line(geometry, lineMaterial);
-          scene.add(line);
-
-          // Z AXIS IS GREEN
-          var lineMaterial = new THREE.LineBasicMaterial({ color: 0x00CC00, linewidth: 5 });
-          var geometry = new THREE.Geometry();
-          geometry.vertices.push(new THREE.Vector3(0,0,0));
-          geometry.vertices.push(new THREE.Vector3(0, 0, 500));
-          var line = new THREE.Line(geometry, lineMaterial);
-          scene.add(line);
-
-          // Y AXIS IS BLUE
-          var lineMaterial = new THREE.LineBasicMaterial({ color: 0x0000CC, linewidth: 5 });
-          var geometry = new THREE.Geometry();
-          geometry.vertices.push(new THREE.Vector3(0,0,0));
-          geometry.vertices.push(new THREE.Vector3(0, 500, 0));
-          var line = new THREE.Line(geometry, lineMaterial);
-          scene.add(line);
+          drawOriginMarker(scene, 500);
 
           // Grid
           var size = 750, step = 75;
