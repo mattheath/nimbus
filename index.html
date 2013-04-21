@@ -82,8 +82,6 @@
 
           items.push( createCube(75, 42.75, 75, 0, -75, 0.6) );
           items.push( createCube(75, 67.5, 175, 0, -75) );
-          items.push( createCube(75, 67.5, 275, 0, -75) );
-          items.push( createCube(75, 42.75, 375, 0, -75) );
           items.push( createCube(75, 42.75, 75, 0, 175) );
           items.push( createCube(75, 67.5, 175, 0, 175) );
           items.push( createCube(75, 67.5, 275, 0, 175) );
@@ -94,6 +92,11 @@
           items.push( createCube(75, 90, 375, 0, 275) );
           items.push( createCube(75, 75, -175, 0, 275, 0.6) );
 
+          // Worker nodes (stacked)
+          items.push( createCube(75, 37.5, 375, 0, -75) );
+          items.push( createCube(75, 37.5, 375, 55, -75) );
+          items.push( createCube(75, 37.5, 470, 0, -75) );
+          items.push( createCube(75, 37.5, 470, 55, -75) );
 
           // Add scene items to scene
           _.each(items, function(item) {
