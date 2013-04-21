@@ -1,5 +1,4 @@
 
-
 function createCube(width, height, x, y, z, opacity) {
 
      // Defaults
@@ -117,45 +116,48 @@ function createOctagon(scene, width, height, x, y, z, opacity) {
      var yMax = y + height;
 
      // Calculate vertices
-     var v0 = new THREE.Vector3(xMax - cornerRadius, yMin, zMin);
-     var v1 = new THREE.Vector3(xMin + cornerRadius, yMin, zMin);
-     var v2 = new THREE.Vector3(xMin, yMin, zMin + cornerRadius);
-     var v3 = new THREE.Vector3(xMin, yMin, zMax - cornerRadius);
-     var v4 = new THREE.Vector3(xMin + cornerRadius, yMin, zMax);
-     var v5 = new THREE.Vector3(xMax - cornerRadius, yMin, zMax);
-     var v6 = new THREE.Vector3(xMax, yMin, zMax - cornerRadius);
-     var v7 = new THREE.Vector3(xMax, yMin, zMin + cornerRadius);
 
-     var v8  = new THREE.Vector3(xMax - cornerRadius, yMax, zMin);
-     var v9  = new THREE.Vector3(xMin + cornerRadius, yMax, zMin);
-     var v10 = new THREE.Vector3(xMin, yMax, zMin + cornerRadius);
-     var v11 = new THREE.Vector3(xMin, yMax, zMax - cornerRadius);
-     var v12 = new THREE.Vector3(xMin + cornerRadius, yMax, zMax);
-     var v13 = new THREE.Vector3(xMax - cornerRadius, yMax, zMax);
-     var v14 = new THREE.Vector3(xMax, yMax, zMax - cornerRadius);
-     var v15 = new THREE.Vector3(xMax, yMax, zMin + cornerRadius);
+     var vertices = [];
+
+     vertices.push( new THREE.Vector3(xMax - cornerRadius, yMin, zMin) );
+     vertices.push( new THREE.Vector3(xMin + cornerRadius, yMin, zMin) );
+     vertices.push( new THREE.Vector3(xMin, yMin, zMin + cornerRadius) );
+     vertices.push( new THREE.Vector3(xMin, yMin, zMax - cornerRadius) );
+     vertices.push( new THREE.Vector3(xMin + cornerRadius, yMin, zMax) );
+     vertices.push( new THREE.Vector3(xMax - cornerRadius, yMin, zMax) );
+     vertices.push( new THREE.Vector3(xMax, yMin, zMax - cornerRadius) );
+     vertices.push( new THREE.Vector3(xMax, yMin, zMin + cornerRadius) );
+
+     vertices.push( new THREE.Vector3(xMax - cornerRadius, yMax, zMin) );
+     vertices.push( new THREE.Vector3(xMin + cornerRadius, yMax, zMin) );
+     vertices.push( new THREE.Vector3(xMin, yMax, zMin + cornerRadius) );
+     vertices.push( new THREE.Vector3(xMin, yMax, zMax - cornerRadius) );
+     vertices.push( new THREE.Vector3(xMin + cornerRadius, yMax, zMax) );
+     vertices.push( new THREE.Vector3(xMax - cornerRadius, yMax, zMax) );
+     vertices.push( new THREE.Vector3(xMax, yMax, zMax - cornerRadius) );
+     vertices.push( new THREE.Vector3(xMax, yMax, zMin + cornerRadius) );
 
      // Start building our Geometry
      var geometry = new THREE.Geometry();
 
      // Push in all the vertices
-     geometry.vertices.push(v0);
-     geometry.vertices.push(v1);
-     geometry.vertices.push(v2);
-     geometry.vertices.push(v3);
-     geometry.vertices.push(v4);
-     geometry.vertices.push(v5);
-     geometry.vertices.push(v6);
-     geometry.vertices.push(v7);
+     geometry.vertices.push(vertices[0]);
+     geometry.vertices.push(vertices[1]);
+     geometry.vertices.push(vertices[2]);
+     geometry.vertices.push(vertices[3]);
+     geometry.vertices.push(vertices[4]);
+     geometry.vertices.push(vertices[5]);
+     geometry.vertices.push(vertices[6]);
+     geometry.vertices.push(vertices[7]);
 
-     geometry.vertices.push(v8);
-     geometry.vertices.push(v9);
-     geometry.vertices.push(v10);
-     geometry.vertices.push(v11);
-     geometry.vertices.push(v12);
-     geometry.vertices.push(v13);
-     geometry.vertices.push(v14);
-     geometry.vertices.push(v15);
+     geometry.vertices.push(vertices[8]);
+     geometry.vertices.push(vertices[9]);
+     geometry.vertices.push(vertices[10]);
+     geometry.vertices.push(vertices[11]);
+     geometry.vertices.push(vertices[12]);
+     geometry.vertices.push(vertices[13]);
+     geometry.vertices.push(vertices[14]);
+     geometry.vertices.push(vertices[15]);
 
      // Add faces, top and bottom need 3 polygons as we can only create faces
      // with 4 vertices
@@ -188,17 +190,17 @@ function createOctagon(scene, width, height, x, y, z, opacity) {
      // Outline
 
      var outlineGeometry = new THREE.Geometry();
-     outlineGeometry.vertices.push(new THREE.Vector3(v4.x, v4.y, v4.z));
-     outlineGeometry.vertices.push(new THREE.Vector3(v5.x, v5.y, v5.z));
-     outlineGeometry.vertices.push(new THREE.Vector3(v6.x, v6.y, v6.z));
-     outlineGeometry.vertices.push(new THREE.Vector3(v7.x, v7.y, v7.z));
-     outlineGeometry.vertices.push(new THREE.Vector3(v15.x, v15.y, v15.z));
-     outlineGeometry.vertices.push(new THREE.Vector3(v8.x, v8.y, v8.z));
-     outlineGeometry.vertices.push(new THREE.Vector3(v9.x, v9.y, v9.z));
-     outlineGeometry.vertices.push(new THREE.Vector3(v10.x, v10.y, v10.z));
-     outlineGeometry.vertices.push(new THREE.Vector3(v11.x, v11.y, v11.z));
-     outlineGeometry.vertices.push(new THREE.Vector3(v12.x, v12.y, v12.z));
-     outlineGeometry.vertices.push(new THREE.Vector3(v4.x, v4.y, v4.z));
+     outlineGeometry.vertices.push(new THREE.Vector3(vertices[4].x, vertices[4].y, vertices[4].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(vertices[5].x, vertices[5].y, vertices[5].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(vertices[6].x, vertices[6].y, vertices[6].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(vertices[7].x, vertices[7].y, vertices[7].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(vertices[15].x, vertices[15].y, vertices[15].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(vertices[8].x, vertices[8].y, vertices[8].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(vertices[9].x, vertices[9].y, vertices[9].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(vertices[10].x, vertices[10].y, vertices[10].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(vertices[11].x, vertices[11].y, vertices[11].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(vertices[12].x, vertices[12].y, vertices[12].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(vertices[4].x, vertices[4].y, vertices[4].z));
 
      var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 6 });
      var outline = new THREE.Line(outlineGeometry, lineMaterial);
@@ -212,58 +214,58 @@ function createOctagon(scene, width, height, x, y, z, opacity) {
      // Front lines
 
      var innerLine = new THREE.Geometry();
-     innerLine.vertices.push(new THREE.Vector3(v5.x, v5.y, v5.z));
-     innerLine.vertices.push(new THREE.Vector3(v13.x, v13.y, v13.z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[5].x, vertices[5].y, vertices[5].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[13].x, vertices[13].y, vertices[13].z));
      var line = new THREE.Line(innerLine, lineMaterial);
      octagon.add(line);
 
      var innerLine = new THREE.Geometry();
-     innerLine.vertices.push(new THREE.Vector3(v6.x, v6.y, v6.z));
-     innerLine.vertices.push(new THREE.Vector3(v14.x, v14.y, v14.z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[6].x, vertices[6].y, vertices[6].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[14].x, vertices[14].y, vertices[14].z));
      var line = new THREE.Line(innerLine, lineMaterial);
      octagon.add(line);
 
      var innerLine = new THREE.Geometry();
-     innerLine.vertices.push(new THREE.Vector3(v15.x, v15.y, v15.z));
-     innerLine.vertices.push(new THREE.Vector3(v14.x, v14.y, v14.z));
-     innerLine.vertices.push(new THREE.Vector3(v13.x, v13.y, v13.z));
-     innerLine.vertices.push(new THREE.Vector3(v12.x, v12.y, v12.z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[15].x, vertices[15].y, vertices[15].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[14].x, vertices[14].y, vertices[14].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[13].x, vertices[13].y, vertices[13].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[12].x, vertices[12].y, vertices[12].z));
      var line = new THREE.Line(innerLine, lineMaterial);
      octagon.add(line);
 
      // Back lines - hidden unless transparent
 
      var innerLine = new THREE.Geometry();
-     innerLine.vertices.push(new THREE.Vector3(v3.x, v3.y, v3.z));
-     innerLine.vertices.push(new THREE.Vector3(v11.x, v11.y, v11.z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[3].x, vertices[3].y, vertices[3].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[11].x, vertices[11].y, vertices[11].z));
      var line = new THREE.Line(innerLine, lineMaterial);
      octagon.add(line);
 
      var innerLine = new THREE.Geometry();
-     innerLine.vertices.push(new THREE.Vector3(v2.x, v2.y, v2.z));
-     innerLine.vertices.push(new THREE.Vector3(v10.x, v10.y, v10.z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[2].x, vertices[2].y, vertices[2].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[10].x, vertices[10].y, vertices[10].z));
      var line = new THREE.Line(innerLine, lineMaterial);
      octagon.add(line);
 
      var innerLine = new THREE.Geometry();
-     innerLine.vertices.push(new THREE.Vector3(v1.x, v1.y, v1.z));
-     innerLine.vertices.push(new THREE.Vector3(v9.x, v9.y, v9.z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[1].x, vertices[1].y, vertices[1].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[9].x, vertices[9].y, vertices[9].z));
      var line = new THREE.Line(innerLine, lineMaterial);
      octagon.add(line);
 
      var innerLine = new THREE.Geometry();
-     innerLine.vertices.push(new THREE.Vector3(v0.x, v0.y, v0.z));
-     innerLine.vertices.push(new THREE.Vector3(v8.x, v8.y, v8.z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[0].x, vertices[0].y, vertices[0].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[8].x, vertices[8].y, vertices[8].z));
      var line = new THREE.Line(innerLine, lineMaterial);
      octagon.add(line);
 
      var innerLine = new THREE.Geometry();
-     innerLine.vertices.push(new THREE.Vector3(v7.x, v7.y, v7.z));
-     innerLine.vertices.push(new THREE.Vector3(v0.x, v0.y, v0.z));
-     innerLine.vertices.push(new THREE.Vector3(v1.x, v1.y, v1.z));
-     innerLine.vertices.push(new THREE.Vector3(v2.x, v2.y, v2.z));
-     innerLine.vertices.push(new THREE.Vector3(v3.x, v3.y, v3.z));
-     innerLine.vertices.push(new THREE.Vector3(v4.x, v4.y, v4.z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[7].x, vertices[7].y, vertices[7].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[0].x, vertices[0].y, vertices[0].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[1].x, vertices[1].y, vertices[1].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[2].x, vertices[2].y, vertices[2].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[3].x, vertices[3].y, vertices[3].z));
+     innerLine.vertices.push(new THREE.Vector3(vertices[4].x, vertices[4].y, vertices[4].z));
      var line = new THREE.Line(innerLine, lineMaterial);
      octagon.add(line);
 
