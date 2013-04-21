@@ -77,34 +77,32 @@
           var ambientLight = new THREE.AmbientLight(0x555555);
           scene.add(ambientLight);
 
-          // Cubes
-          var cubes = [];
+          // Build our scene
+          var items = [];
 
-          cubes.push( createCube(75, 42.75, 75, 0, -75, 0.6) );
-          cubes.push( createCube(75, 67.5, 175, 0, -75) );
+          items.push( createCube(75, 42.75, 75, 0, -75, 0.6) );
+          items.push( createCube(75, 67.5, 175, 0, -75) );
+          items.push( createCube(75, 67.5, 275, 0, -75) );
+          items.push( createCube(75, 42.75, 375, 0, -75) );
+          items.push( createCube(75, 42.75, 75, 0, 175) );
+          items.push( createCube(75, 67.5, 175, 0, 175) );
+          items.push( createCube(75, 67.5, 275, 0, 175) );
+          items.push( createCube(75, 42.75, 375, 0, 175) );
+          items.push( createCube(75, 37.5, 75, 0, 275) );
+          items.push( createCube(75, 42.75, 175, 0, 275, 0.6) );
+          items.push( createCube(75, 67.5, 275, 0, 275, 0.6) );
+          items.push( createCube(75, 90, 375, 0, 275) );
+          items.push( createCube(75, 75, -175, 0, 275, 0.6) );
 
-          cubes.push( createCube(75, 67.5, 275, 0, -75) );
-          cubes.push( createCube(75, 42.75, 375, 0, -75) );
-          cubes.push( createCube(75, 42.75, 75, 0, 175) );
-          cubes.push( createCube(75, 67.5, 175, 0, 175) );
-          cubes.push( createCube(75, 67.5, 275, 0, 175) );
-          cubes.push( createCube(75, 42.75, 375, 0, 175) );
 
-          cubes.push( createCube(75, 37.5, 75, 0, 275) );
-          cubes.push( createCube(75, 42.75, 175, 0, 275, 0.6) );
-          cubes.push( createCube(75, 67.5, 275, 0, 275, 0.6) );
-          cubes.push( createCube(75, 90, 375, 0, 275) );
+          // Add scene items to scene
+          _.each(items, function(item) {
 
-          cubes.push( createCube(75, 75, -175, 0, 275, 0.6) );
-
-          // Add cubes to scene
-          _.each(cubes, function(cube) {
-
-            // Add cube object to the scene
-            scene.add( cube );
+            // Add object to the scene
+            scene.add( item );
 
             // and our list of objects for intersection mapping
-            _.each(cube.children, function(child) {
+            _.each(item.children, function(child) {
               if (child instanceof THREE.Mesh) {
                 objects.push(child)
               }
