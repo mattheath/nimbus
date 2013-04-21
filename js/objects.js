@@ -14,6 +14,9 @@ function createCube(width, height, x, y, z, opacity) {
      // Default opacity to non-transparent
      opacity = opacity || 1;
 
+     // Amount to separate objects by to ensure no clipping
+     var clipBufferAmount = 0.3;
+
      // Container object
      var cube = new THREE.Object3D(); //create an empty container
 
@@ -45,7 +48,6 @@ function createCube(width, height, x, y, z, opacity) {
      // Inner lines
 
      var geometry = new THREE.Geometry();
-     var clipBufferAmount = 0.1;
      geometry.vertices.push(new THREE.Vector3(x + width/2 + clipBufferAmount, y - height/2 + clipBufferAmount, z + width/2 + clipBufferAmount));
      geometry.vertices.push(new THREE.Vector3(x + width/2 + clipBufferAmount, y + height/2 + clipBufferAmount, z + width/2 + clipBufferAmount));
      geometry.vertices.push(new THREE.Vector3(x - width/2 + clipBufferAmount, y + height/2 + clipBufferAmount, z + width/2 + clipBufferAmount));
@@ -59,7 +61,6 @@ function createCube(width, height, x, y, z, opacity) {
      // Back inner lines (occluded unless transparent)
 
      var geometry = new THREE.Geometry();
-     var clipBufferAmount = 0.1;
      geometry.vertices.push(new THREE.Vector3(x - width/2 - clipBufferAmount, y + height/2 + clipBufferAmount, z - width/2 - clipBufferAmount));
      geometry.vertices.push(new THREE.Vector3(x - width/2 - clipBufferAmount, y - height/2 - clipBufferAmount, z - width/2 - clipBufferAmount));
      geometry.vertices.push(new THREE.Vector3(x - width/2 - clipBufferAmount, y - height/2 - clipBufferAmount, z + width/2 + clipBufferAmount));
@@ -76,7 +77,7 @@ function createCube(width, height, x, y, z, opacity) {
      var squareSize = width * 0.1333333333;
      var squareBorderSpacing = squareSize * 0.6;
      var squarePosX = x + width / 2 - squareSize - squareBorderSpacing;
-     var squarePosY = y + clipBufferAmount*2 + height / 2;
+     var squarePosY = y + clipBufferAmount + height / 2;
      var squarePosZ = z + width / 2 - squareSize - squareBorderSpacing;
 
      var squareGeometry = new THREE.Geometry();
