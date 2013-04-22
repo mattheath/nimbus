@@ -1,5 +1,16 @@
-
+/**
+ * Create a cuboid
+ */
 function createCube(width, height, x, y, z, opacity) {
+
+     return createOblong(width, width + 30, height, x, y, z, opacity);
+
+}
+
+/**
+ * Create an oblong
+ */
+function createOblong(width, length, height, x, y, z, opacity) {
 
      // Defaults
      //var width = 50;
@@ -22,7 +33,7 @@ function createCube(width, height, x, y, z, opacity) {
 
      // Cube
 
-     var geometry = new THREE.CubeGeometry( width, height, width );
+     var geometry = new THREE.CubeGeometry( width, height, length );
      var cubeMaterial = new THREE.MeshBasicMaterial( { color: 0xE6E6E6, wireframe: false, opacity: opacity, transparent: true } );
      var cubeMesh = new THREE.Mesh( geometry, cubeMaterial );
      cubeMesh.position.x = x;
@@ -33,13 +44,13 @@ function createCube(width, height, x, y, z, opacity) {
      // Outline
 
      var geometry = new THREE.Geometry();
-     geometry.vertices.push(new THREE.Vector3(x + width/2, y - height/2, z - width/2)); // Bottom right corner
-     geometry.vertices.push(new THREE.Vector3(x + width/2, y + height/2, z - width/2)); // Top right corner
-     geometry.vertices.push(new THREE.Vector3(x - width/2, y + height/2, z - width/2)); // Top back corner
-     geometry.vertices.push(new THREE.Vector3(x - width/2, y + height/2, z + width/2)); // Top left corner
-     geometry.vertices.push(new THREE.Vector3(x - width/2, y - height/2, z + width/2)); // Bottom left corner
-     geometry.vertices.push(new THREE.Vector3(x + width/2, y - height/2, z + width/2)); // Bottom front corner
-     geometry.vertices.push(new THREE.Vector3(x + width/2, y - height/2, z - width/2)); // Bottom right corner
+     geometry.vertices.push(new THREE.Vector3(x + width/2, y - height/2, z - length/2)); // Bottom right corner
+     geometry.vertices.push(new THREE.Vector3(x + width/2, y + height/2, z - length/2)); // Top right corner
+     geometry.vertices.push(new THREE.Vector3(x - width/2, y + height/2, z - length/2)); // Top back corner
+     geometry.vertices.push(new THREE.Vector3(x - width/2, y + height/2, z + length/2)); // Top left corner
+     geometry.vertices.push(new THREE.Vector3(x - width/2, y - height/2, z + length/2)); // Bottom left corner
+     geometry.vertices.push(new THREE.Vector3(x + width/2, y - height/2, z + length/2)); // Bottom front corner
+     geometry.vertices.push(new THREE.Vector3(x + width/2, y - height/2, z - length/2)); // Bottom right corner
 
      var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 6 });
      var line = new THREE.Line(geometry, lineMaterial);
@@ -48,11 +59,11 @@ function createCube(width, height, x, y, z, opacity) {
      // Inner lines
 
      var geometry = new THREE.Geometry();
-     geometry.vertices.push(new THREE.Vector3(x + width/2 + clipBufferAmount, y - height/2 + clipBufferAmount, z + width/2 + clipBufferAmount));
-     geometry.vertices.push(new THREE.Vector3(x + width/2 + clipBufferAmount, y + height/2 + clipBufferAmount, z + width/2 + clipBufferAmount));
-     geometry.vertices.push(new THREE.Vector3(x - width/2 + clipBufferAmount, y + height/2 + clipBufferAmount, z + width/2 + clipBufferAmount));
-     geometry.vertices.push(new THREE.Vector3(x + width/2 + clipBufferAmount, y + height/2 + clipBufferAmount, z + width/2 + clipBufferAmount));
-     geometry.vertices.push(new THREE.Vector3(x + width/2 + clipBufferAmount, y + height/2 + clipBufferAmount, z - width/2 + clipBufferAmount));
+     geometry.vertices.push(new THREE.Vector3(x + width/2 + clipBufferAmount, y - height/2 + clipBufferAmount, z + length/2 + clipBufferAmount));
+     geometry.vertices.push(new THREE.Vector3(x + width/2 + clipBufferAmount, y + height/2 + clipBufferAmount, z + length/2 + clipBufferAmount));
+     geometry.vertices.push(new THREE.Vector3(x - width/2 + clipBufferAmount, y + height/2 + clipBufferAmount, z + length/2 + clipBufferAmount));
+     geometry.vertices.push(new THREE.Vector3(x + width/2 + clipBufferAmount, y + height/2 + clipBufferAmount, z + length/2 + clipBufferAmount));
+     geometry.vertices.push(new THREE.Vector3(x + width/2 + clipBufferAmount, y + height/2 + clipBufferAmount, z - length/2 + clipBufferAmount));
 
      var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 2 });
      var line = new THREE.Line(geometry, lineMaterial);
