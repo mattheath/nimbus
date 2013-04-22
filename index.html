@@ -12,6 +12,7 @@
     <!-- Three.js and libraries -->
     <script src="js/three.min.js"></script>
     <script src="js/stats.min.js"></script>
+    <script src="js/controls/TrackballControls.js"></script>
 
     <!-- Objects -->
     <script src="js/locus.js"></script>
@@ -54,7 +55,33 @@
 
           //camera = new THREE.OrthographicCamera( window.innerWidth / - 2, window.innerWidth / 2, window.innerHeight / 2, window.innerHeight / - 2, - 500, 1000 );
           camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 2000);
+
           scene = new THREE.Scene();
+
+          // Isometric projection camera locations
+          //camera.position.x = 120; //Math.cos( timer ) * 200;
+          //camera.position.y = 94;
+          //camera.position.z = 120; //Math.sin( timer ) * 200;
+
+          // Perspective projection camera position
+          camera.position.x = 800; //Math.cos( Date.now() ) * 200;
+          camera.position.y = 600;
+          camera.position.z = 800; //Math.sin( timer ) * 200;
+
+          // Look at the centre of the scene
+          camera.lookAt( scene.position );
+
+          // Add camera controls
+          controls = new THREE.TrackballControls( camera );
+          controls.rotateSpeed = 1.0;
+          controls.zoomSpeed = 1.2;
+          controls.panSpeed = 0.8;
+          controls.noZoom = false;
+          controls.noPan = false;
+          controls.staticMoving = true;
+          controls.dynamicDampingFactor = 0.3;
+          controls.keys = [ 65, 83, 68 ];
+          controls.addEventListener( 'change', render );
 
           // Mark the origin
           drawOriginMarker(scene, 500);
@@ -154,8 +181,10 @@
         camera.updateProjectionMatrix();
 
         renderer.setSize( window.innerWidth, window.innerHeight );
-        render();
 
+        controls.handleResize();
+
+        render();
       }
 
       function animate() {
@@ -167,6 +196,7 @@
 
         setTimeout( function() {
           requestAnimationFrame( animate );
+          controls.update();
         }, 1000 / rate );
 
         render();
@@ -175,20 +205,6 @@
 
 
       function render() {
-
-        // Isometric projection camera locations
-        //camera.position.x = 120; //Math.cos( timer ) * 200;
-        //camera.position.y = 94;
-        //camera.position.z = 120; //Math.sin( timer ) * 200;
-
-        // Perspective projection camera position
-        camera.position.x = 800; //Math.cos( Date.now() ) * 200;
-        camera.position.y = 600;
-        camera.position.z = 800; //Math.sin( timer ) * 200;
-
-        // Look at the centre of the scene
-        camera.lookAt( scene.position );
-
         renderer.render( scene, camera );
       }
 
