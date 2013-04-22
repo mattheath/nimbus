@@ -182,8 +182,8 @@
         //camera.position.z = 120; //Math.sin( timer ) * 200;
 
         // Perspective projection camera position
-        camera.position.x = 800; //Math.cos( timer ) * 200;
-        camera.position.y = 500;
+        camera.position.x = 800; //Math.cos( Date.now() ) * 200;
+        camera.position.y = 600;
         camera.position.z = 800; //Math.sin( timer ) * 200;
 
         // Look at the centre of the scene
@@ -204,15 +204,6 @@
         projector.unprojectVector( vector, camera );
 
         var raycaster = new THREE.Raycaster( camera.position, vector.sub( camera.position ).normalize() );
-
-        if ( SELECTED ) {
-
-          var intersects = raycaster.intersectObject( plane );
-          SELECTED.position.copy( intersects[ 0 ].point.sub( offset ) );
-          return;
-
-        }
-
 
         var intersects = raycaster.intersectObjects( objects, true );
 
