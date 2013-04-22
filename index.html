@@ -108,19 +108,12 @@
           // Build our scene
           var items = [];
 
-          items.push( createCube(75, 42.75, 75, 0, -75, 0.6) );
-          items.push( createCube(75, 67.5, 175, 0, -75) );
-          //items.push( createCube(75, 42.75, 75, 0, 175) );
-          //items.push( createCube(75, 67.5, 175, 0, 175) );
-          //items.push( createCube(75, 67.5, 275, 0, 175) );
-          //items.push( createCube(75, 42.75, 375, 0, 175) );
-          //items.push( createCube(75, 37.5, 75, 0, 275) );
-          //items.push( createCube(75, 42.75, 175, 0, 275, 0.6) );
-          //items.push( createCube(75, 67.5, 275, 0, 275, 0.6) );
-          //items.push( createCube(75, 90, 375, 0, 275) );
-          //items.push( createCube(75, 75, -175, 0, 275, 0.6) );
+          items.push( ec2Instance( { "size": "small", "x": 75, "z": -75, "opacity": 0.5 } ));
+          items.push( ec2Instance( { "size": "large", "x": 175, "z": -75, "opacity": 0.5 } ));
 
           items.push( ec2Instance( { "size": "small", "x": 0, "z": 200 } ));
+          items.push( ec2Instance( { "size": "medium", "x": 0, "z": 300 } ));
+          items.push( ec2Instance( { "size": "large", "x": 0, "z": 400, "opacity": 0.5 } ));
 
           // Worker nodes (stacked)
           items.push( createCube(75, 37.5, 375, 0, -75) );
