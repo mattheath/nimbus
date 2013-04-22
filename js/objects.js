@@ -3,7 +3,7 @@
  */
 function createCube(width, height, x, y, z, opacity) {
 
-     return createOblong(width, width + 30, height, x, y, z, opacity);
+     return createOblong(width, width, height, x, y, z, opacity);
 
 }
 
@@ -72,36 +72,15 @@ function createOblong(width, length, height, x, y, z, opacity) {
      // Back inner lines (occluded unless transparent)
 
      var geometry = new THREE.Geometry();
-     geometry.vertices.push(new THREE.Vector3(x - width/2 - clipBufferAmount, y + height/2 + clipBufferAmount, z - width/2 - clipBufferAmount));
-     geometry.vertices.push(new THREE.Vector3(x - width/2 - clipBufferAmount, y - height/2 - clipBufferAmount, z - width/2 - clipBufferAmount));
-     geometry.vertices.push(new THREE.Vector3(x - width/2 - clipBufferAmount, y - height/2 - clipBufferAmount, z + width/2 + clipBufferAmount));
-     geometry.vertices.push(new THREE.Vector3(x - width/2 - clipBufferAmount, y - height/2 - clipBufferAmount, z - width/2 - clipBufferAmount));
-     geometry.vertices.push(new THREE.Vector3(x + width/2 + clipBufferAmount, y - height/2 - clipBufferAmount, z - width/2 - clipBufferAmount));
+     geometry.vertices.push(new THREE.Vector3(x - width/2 - clipBufferAmount, y + height/2 + clipBufferAmount, z - length/2 - clipBufferAmount));
+     geometry.vertices.push(new THREE.Vector3(x - width/2 - clipBufferAmount, y - height/2 - clipBufferAmount, z - length/2 - clipBufferAmount));
+     geometry.vertices.push(new THREE.Vector3(x - width/2 - clipBufferAmount, y - height/2 - clipBufferAmount, z + length/2 + clipBufferAmount));
+     geometry.vertices.push(new THREE.Vector3(x - width/2 - clipBufferAmount, y - height/2 - clipBufferAmount, z - length/2 - clipBufferAmount));
+     geometry.vertices.push(new THREE.Vector3(x + width/2 + clipBufferAmount, y - height/2 - clipBufferAmount, z - length/2 - clipBufferAmount));
 
      var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 2 });
      var line = new THREE.Line(geometry, lineMaterial);
      cube.add(line);
-
-     // Add square logo to top of the cube
-
-     // Calculate size & position of the square, relative to the cube size
-     var squareSize = width * 0.1333333333;
-     var squareBorderSpacing = squareSize * 0.6;
-     var squarePosX = x + width / 2 - squareSize - squareBorderSpacing;
-     var squarePosY = y + clipBufferAmount + height / 2;
-     var squarePosZ = z + width / 2 - squareSize - squareBorderSpacing;
-
-     var squareGeometry = new THREE.Geometry();
-     squareGeometry.vertices.push(new THREE.Vector3(-1 * squareSize, 0, squareSize));
-     squareGeometry.vertices.push(new THREE.Vector3(squareSize, 0,  squareSize));
-     squareGeometry.vertices.push(new THREE.Vector3(squareSize, 0, -1 * squareSize));
-     squareGeometry.vertices.push(new THREE.Vector3(-1 * squareSize, 0, -1 * squareSize));
-     squareGeometry.faces.push(new THREE.Face4(0, 1, 2, 3));
-
-     var squareMaterial = new THREE.MeshBasicMaterial( { color: 0x707071, side: THREE.DoubleSide, opacity: opacity, transparent: true } );
-     var squareMesh = new THREE.Mesh(squareGeometry, squareMaterial);
-     squareMesh.position.set(squarePosX, squarePosY, squarePosZ);
-     cube.add( squareMesh );
 
      return cube;
 
