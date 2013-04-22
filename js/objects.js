@@ -194,6 +194,10 @@ function createOctagon(scene, width, height, x, y, z, opacity) {
      geometry.faces.push(new THREE.Face4(6, 7, 15, 14));
      geometry.faces.push(new THREE.Face4(7, 0, 8, 15));
 
+     // FUCK YOU FACE NORMALS
+     // http://stackoverflow.com/questions/16138088/three-js-raycaster-not-intersecting-custom-mesh/
+     geometry.computeFaceNormals();
+
      var octagonMaterial = new THREE.MeshBasicMaterial( { color: 0xE6E6E6, side: THREE.DoubleSide, opacity: opacity, transparent: true } );
      var mesh = new THREE.Mesh(geometry, octagonMaterial);
      octagon.add( mesh );
