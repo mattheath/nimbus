@@ -57,9 +57,9 @@ function s3(data) {
 
     var clipBufferAmount = 0.2;
 
-    var x = 350; //data.x;
+    var x = data.x;
     var y = data.y || 0;
-    var z = 250; //data.z;
+    var z = data.z;
 
     var width = 100;
     var height = width;
