@@ -124,6 +124,9 @@
           // ELB
           items.push( createOctagon(scene, 75, 37.5, 175, 0, 175, 1) );
 
+          // S3
+          items.push(s3({}));
+
           // Add scene items to scene
           _.each(items, function(item) {
 
