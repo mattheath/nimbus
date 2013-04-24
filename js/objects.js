@@ -474,7 +474,7 @@ function createCubeWithCutoffCorners(scene, width, height, x, y, z, opacity) {
      var outline = new THREE.Line(outlineGeometry, lineMaterial);
      base.add(outline);
 
-/*
+
      // Inner lines
 
      var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 2 });
@@ -483,70 +483,32 @@ function createCubeWithCutoffCorners(scene, width, height, x, y, z, opacity) {
 
      var innerLine = new THREE.Geometry();
      innerLine.vertices.push(new THREE.Vector3(clipPos[5].x, clipPos[5].y, clipPos[5].z));
-     innerLine.vertices.push(new THREE.Vector3(clipPos[13].x, clipPos[13].y, clipPos[13].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[10].x, clipPos[10].y, clipPos[10].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[11].x, clipPos[11].y, clipPos[11].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[6].x, clipPos[6].y, clipPos[6].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[2].x, clipPos[2].y, clipPos[2].z));
      var line = new THREE.Line(innerLine, lineMaterial);
-     octagon.add(line);
+     base.add(line);
 
      var innerLine = new THREE.Geometry();
      innerLine.vertices.push(new THREE.Vector3(clipPos[6].x, clipPos[6].y, clipPos[6].z));
-     innerLine.vertices.push(new THREE.Vector3(clipPos[14].x, clipPos[14].y, clipPos[14].z));
-     var line = new THREE.Line(innerLine, lineMaterial);
-     octagon.add(line);
-
-     var innerLine = new THREE.Geometry();
-     innerLine.vertices.push(new THREE.Vector3(clipPos[15].x, clipPos[15].y, clipPos[15].z));
-     innerLine.vertices.push(new THREE.Vector3(clipPos[14].x, clipPos[14].y, clipPos[14].z));
-     innerLine.vertices.push(new THREE.Vector3(clipPos[13].x, clipPos[13].y, clipPos[13].z));
      innerLine.vertices.push(new THREE.Vector3(clipPos[12].x, clipPos[12].y, clipPos[12].z));
-     var line = new THREE.Line(innerLine, lineMaterial);
-     octagon.add(line);
-
-     // Back lines - hidden unless transparent
-
-     var innerLine = new THREE.Geometry();
-     innerLine.vertices.push(new THREE.Vector3(clipPos[3].x, clipPos[3].y, clipPos[3].z));
-     innerLine.vertices.push(new THREE.Vector3(clipPos[11].x, clipPos[11].y, clipPos[11].z));
-     var line = new THREE.Line(innerLine, lineMaterial);
-     octagon.add(line);
-
-     var innerLine = new THREE.Geometry();
-     innerLine.vertices.push(new THREE.Vector3(clipPos[2].x, clipPos[2].y, clipPos[2].z));
-     innerLine.vertices.push(new THREE.Vector3(clipPos[10].x, clipPos[10].y, clipPos[10].z));
-     var line = new THREE.Line(innerLine, lineMaterial);
-     octagon.add(line);
-
-     var innerLine = new THREE.Geometry();
-     innerLine.vertices.push(new THREE.Vector3(clipPos[1].x, clipPos[1].y, clipPos[1].z));
-     innerLine.vertices.push(new THREE.Vector3(clipPos[9].x, clipPos[9].y, clipPos[9].z));
-     var line = new THREE.Line(innerLine, lineMaterial);
-     octagon.add(line);
-
-     var innerLine = new THREE.Geometry();
-     innerLine.vertices.push(new THREE.Vector3(clipPos[0].x, clipPos[0].y, clipPos[0].z));
-     innerLine.vertices.push(new THREE.Vector3(clipPos[8].x, clipPos[8].y, clipPos[8].z));
-     var line = new THREE.Line(innerLine, lineMaterial);
-     octagon.add(line);
-
-     var innerLine = new THREE.Geometry();
+     innerLine.vertices.push(new THREE.Vector3(clipPos[13].x, clipPos[13].y, clipPos[13].z));
      innerLine.vertices.push(new THREE.Vector3(clipPos[7].x, clipPos[7].y, clipPos[7].z));
-     innerLine.vertices.push(new THREE.Vector3(clipPos[0].x, clipPos[0].y, clipPos[0].z));
-     innerLine.vertices.push(new THREE.Vector3(clipPos[1].x, clipPos[1].y, clipPos[1].z));
-     innerLine.vertices.push(new THREE.Vector3(clipPos[2].x, clipPos[2].y, clipPos[2].z));
-     innerLine.vertices.push(new THREE.Vector3(clipPos[3].x, clipPos[3].y, clipPos[3].z));
-     innerLine.vertices.push(new THREE.Vector3(clipPos[4].x, clipPos[4].y, clipPos[4].z));
      var line = new THREE.Line(innerLine, lineMaterial);
-     octagon.add(line);
+     base.add(line);
 
-     // How about an ELB logo
+     var innerLine = new THREE.Geometry();
+     innerLine.vertices.push(new THREE.Vector3(clipPos[9].x, clipPos[9].y, clipPos[9].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[10].x, clipPos[10].y, clipPos[10].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[11].x, clipPos[11].y, clipPos[11].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[12].x, clipPos[12].y, clipPos[12].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[13].x, clipPos[13].y, clipPos[13].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[14].x, clipPos[14].y, clipPos[14].z));
+     var line = new THREE.Line(innerLine, lineMaterial);
+     base.add(line);
 
-     // Calculate size & position of the circle, relative to the cube size
-     var radius = (width * 0.7) / 2;
-     var circleMaterial = new THREE.MeshBasicMaterial( { color: 0x707071, side: THREE.DoubleSide, opacity: opacity, transparent: true } );
-     var circleMesh = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, 0, 50, 50), circleMaterial);
-     circleMesh.position.set(x, yMax + clipBufferAmount, z);
-     octagon.add( circleMesh );
 
-*/
 
      // We're done!
 
