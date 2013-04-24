@@ -386,23 +386,21 @@ function createCubeWithCutoffCorners(scene, width, height, x, y, z, opacity) {
           geometry.vertices.push(vertex);
      });
 
-     // Add faces, top and bottom need 3 polygons as we can only create faces
-     // with 4 vertices
+     // Add faces, top and bottom need 3 polygons
+     // Sides need 2 polygons, and
 
      // Bottom face
      geometry.faces.push(new THREE.Face4(0, 1, 2, 3));
 
-     // Side squares
-     geometry.faces.push(new THREE.Face4(0, 1, 5, 4));
-     geometry.faces.push(new THREE.Face4(1, 2, 6, 5));
-     geometry.faces.push(new THREE.Face4(2, 3, 7, 6));
-     geometry.faces.push(new THREE.Face4(0, 3, 7, 4));
-
-     // Size trapeziums
-     geometry.faces.push(new THREE.Face4(4, 5, 9, 8));
-     geometry.faces.push(new THREE.Face4(5, 6, 11, 10));
-     geometry.faces.push(new THREE.Face4(6, 7, 13, 12));
-     geometry.faces.push(new THREE.Face4(7, 4, 15, 14));
+     // Sides
+     geometry.faces.push(new THREE.Face4(0, 4, 8, 1));
+     geometry.faces.push(new THREE.Face4(8, 9, 5, 1));
+     geometry.faces.push(new THREE.Face4(1, 5, 10, 2));
+     geometry.faces.push(new THREE.Face4(2, 6, 11, 10));
+     geometry.faces.push(new THREE.Face4(2, 6, 12, 3));
+     geometry.faces.push(new THREE.Face4(3, 7, 13, 12));
+     geometry.faces.push(new THREE.Face4(3, 7, 14, 0));
+     geometry.faces.push(new THREE.Face4(14, 15, 4, 0));
 
      // Corners
      geometry.faces.push(new THREE.Face3(5, 9, 10));
@@ -508,7 +506,19 @@ function createCubeWithCutoffCorners(scene, width, height, x, y, z, opacity) {
      var line = new THREE.Line(innerLine, lineMaterial);
      base.add(line);
 
+     // Back lines
 
+     var innerLine = new THREE.Geometry();
+     innerLine.vertices.push(new THREE.Vector3(clipPos[3].x, clipPos[3].y, clipPos[3].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[0].x, clipPos[0].y, clipPos[0].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[1].x, clipPos[1].y, clipPos[1].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[0].x, clipPos[0].y, clipPos[0].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[4].x, clipPos[4].y, clipPos[4].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[8].x, clipPos[8].y, clipPos[8].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[15].x, clipPos[15].y, clipPos[15].z));
+     innerLine.vertices.push(new THREE.Vector3(clipPos[4].x, clipPos[4].y, clipPos[4].z));
+     var line = new THREE.Line(innerLine, lineMaterial);
+     base.add(line);
 
      // We're done!
 
