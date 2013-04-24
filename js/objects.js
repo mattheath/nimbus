@@ -424,11 +424,7 @@ function createCubeWithCutoffCorners(scene, width, height, x, y, z, opacity) {
      var mesh = new THREE.Mesh(geometry, baseMaterial);
      base.add( mesh );
 
-     var baseMaterial = new THREE.MeshBasicMaterial( { color: 0x333333, side: THREE.DoubleSide, wireframe: true } );
-     var mesh = new THREE.Mesh(geometry, baseMaterial);
-     base.add( mesh );
 
-/*
      // Calculate expanded vertex location to avoid outline clipping
      // This is an extremely naive implementation which just increases along
      // the X Y and Z axis, this should actually increase along a diagonal
@@ -463,23 +459,22 @@ function createCubeWithCutoffCorners(scene, width, height, x, y, z, opacity) {
      // Outline
 
      var outlineGeometry = new THREE.Geometry();
-     outlineGeometry.vertices.push(new THREE.Vector3(clipPos[4].x, clipPos[4].y, clipPos[4].z));
-     outlineGeometry.vertices.push(new THREE.Vector3(clipPos[5].x, clipPos[5].y, clipPos[5].z));
-     outlineGeometry.vertices.push(new THREE.Vector3(clipPos[6].x, clipPos[6].y, clipPos[6].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(clipPos[1].x, clipPos[1].y, clipPos[1].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(clipPos[2].x, clipPos[2].y, clipPos[2].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(clipPos[3].x, clipPos[3].y, clipPos[3].z));
      outlineGeometry.vertices.push(new THREE.Vector3(clipPos[7].x, clipPos[7].y, clipPos[7].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(clipPos[14].x, clipPos[14].y, clipPos[14].z));
      outlineGeometry.vertices.push(new THREE.Vector3(clipPos[15].x, clipPos[15].y, clipPos[15].z));
      outlineGeometry.vertices.push(new THREE.Vector3(clipPos[8].x, clipPos[8].y, clipPos[8].z));
      outlineGeometry.vertices.push(new THREE.Vector3(clipPos[9].x, clipPos[9].y, clipPos[9].z));
-     outlineGeometry.vertices.push(new THREE.Vector3(clipPos[10].x, clipPos[10].y, clipPos[10].z));
-     outlineGeometry.vertices.push(new THREE.Vector3(clipPos[11].x, clipPos[11].y, clipPos[11].z));
-     outlineGeometry.vertices.push(new THREE.Vector3(clipPos[12].x, clipPos[12].y, clipPos[12].z));
-     outlineGeometry.vertices.push(new THREE.Vector3(clipPos[4].x, clipPos[4].y, clipPos[4].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(clipPos[5].x, clipPos[5].y, clipPos[5].z));
+     outlineGeometry.vertices.push(new THREE.Vector3(clipPos[1].x, clipPos[1].y, clipPos[1].z));
 
      var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 6 });
      var outline = new THREE.Line(outlineGeometry, lineMaterial);
-     octagon.add(outline);
+     base.add(outline);
 
-
+/*
      // Inner lines
 
      var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 2 });
@@ -552,6 +547,7 @@ function createCubeWithCutoffCorners(scene, width, height, x, y, z, opacity) {
      octagon.add( circleMesh );
 
 */
+
      // We're done!
 
      return base;
