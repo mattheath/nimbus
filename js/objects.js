@@ -329,9 +329,6 @@ function createCubeWithCutoffCorners(scene, width, height, x, y, z, opacity) {
      // Container object
      var base = new THREE.Object3D(); //create an empty container
 
-     // Adjust registration point to bottom of object
-     y = y + height / 2;
-
      // Default opacity to non-transparent
      opacity = opacity || 1;
 
