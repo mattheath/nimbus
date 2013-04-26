@@ -521,6 +521,105 @@ function createCubeWithCutoffCorners(scene, width, height, x, y, z, opacity) {
 
      return base;
 
+}
+
+function createPlaneWithCutoffCorner(width, height, x, y, z, opacity) {
+
+     // Container object
+     var base = new THREE.Object3D(); //create an empty container
+
+     // Default opacity to non-transparent
+     opacity = opacity || 1;
+
+     // Amount to separate objects by to ensure no clipping
+     var clipBufferAmount = 0.5;
+
+     // Calculate distance from edge of a cube the octagonal side starts
+     var cornerRadius = 30;
+
+     // Boundaries
+     var xMin = x - width / 2;
+     var xMax = x + width / 2;
+     var zMin = z - width / 2;
+     var zMax = z + width / 2;
+     var yMin = y;
+     var yMax = y + height;
+
+     // Calculate vertices
+
+     var vertices = [];
+
+     vertices.push( new THREE.Vector3(xMin, yMin, zMin) );
+     vertices.push( new THREE.Vector3(xMax, yMin, zMin) );
+     vertices.push( new THREE.Vector3(xMax, yMin, zMax - cornerRadius) );
+     vertices.push( new THREE.Vector3(xMax - cornerRadius, yMin, zMax) );
+     vertices.push( new THREE.Vector3(xMin, yMin, zMax) );
+
+     // Start building our Geometry
+     var geometry = new THREE.Geometry();
+
+     // Push in all the vertices
+     _.each(vertices, function(vertex){
+          geometry.vertices.push(vertex);
+     });
+
+     // Add faces
+
+     geometry.faces.push(new THREE.Face4(0, 1, 2, 3));
+     geometry.faces.push(new THREE.Face3(3, 4, 0));
+
+     var baseMaterial = new THREE.MeshBasicMaterial( { color: 0xEEEEEE, side: THREE.DoubleSide, opacity: opacity, transparent: true } );
+     var planeMesh = new THREE.Mesh(geometry, baseMaterial);
+     base.add( planeMesh );
+
+
+
+     // Calculate expanded vertex location to avoid outline clipping
+     // This is an extremely naive implementation which just increases along
+     // the X Y and Z axis, this should actually increase along a diagonal
+     // from the object's centre point
+
+     var clipPos = []
+
+     _.each(vertices, function(vertex) {
+
+          if (vertex.x > x) {
+               var newX = vertex.x + clipBufferAmount;
+          } else {
+               var newX = vertex.x - clipBufferAmount;
+          }
+
+          if (vertex.y > y) {
+               var newY = vertex.y + clipBufferAmount;
+          } else {
+               var newY = vertex.y - clipBufferAmount;
+          }
+
+          if (vertex.z > z) {
+               var newZ = vertex.z + clipBufferAmount;
+          } else {
+               var newZ = vertex.z - clipBufferAmount;
+          }
+
+          clipPos.push( new THREE.Vector3(newX, newY, newZ) );
+
+     });
+
+     // Outline
+
+     var outlineGeometry = new THREE.Geometry();
+
+     outlineGeometry.vertices.push( new THREE.Vector3(clipPos[0].x, clipPos[0].y, clipPos[0].z) );
+     outlineGeometry.vertices.push( new THREE.Vector3(clipPos[1].x, clipPos[1].y, clipPos[1].z) );
+     outlineGeometry.vertices.push( new THREE.Vector3(clipPos[2].x, clipPos[2].y, clipPos[2].z) );
+     outlineGeometry.vertices.push( new THREE.Vector3(clipPos[3].x, clipPos[3].y, clipPos[3].z) );
+     outlineGeometry.vertices.push( new THREE.Vector3(clipPos[4].x, clipPos[4].y, clipPos[4].z) );
+
+     var lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333, linewidth: 6 });
+     var outline = new THREE.Line(outlineGeometry, lineMaterial);
+     base.add(outline);
+
+     return base;
 
 }
 
