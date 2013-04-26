@@ -338,7 +338,7 @@ function createCubeWithCutoffCorners(scene, width, height, x, y, z, opacity) {
      // Calculate distance from edge of a cube the octagonal side starts
 
      // This gives a true octagonal prism
-     var cornerRadius = width * 0.2;
+     var cornerRadius = width * 0.25;
 
      // Boundaries
      var xMin = x - width / 2;
