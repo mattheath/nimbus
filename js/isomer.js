@@ -27,7 +27,18 @@ Canvas.prototype.clear = function () {
   this.ctx.clearRect(0, 0, this.width, this.height);
 };
 
-Canvas.prototype.path = function (points, color) {
+/**
+ * Draws and fills a path based on points and color. An optional
+ * baseColor can also be passed as the strokeStyle, but otherwise
+ * `color` will be used for both.
+ *
+ * The separate baseColor is set to the color before lighting effects
+ * are added to it, ensuring a consistent line color, which removes
+ * some seams that may appear between blocks
+ */
+Canvas.prototype.path = function (points, color, baseColor) {
+  baseColor = baseColor || color;
+
   this.ctx.beginPath();
   this.ctx.moveTo(points[0].x, points[0].y);
 
@@ -41,7 +52,10 @@ Canvas.prototype.path = function (points, color) {
   this.ctx.save()
 
   this.ctx.globalAlpha = color.a;
-  this.ctx.fillStyle = this.ctx.strokeStyle = color.toHex();
+  this.ctx.fillStyle = color.toHex();
+  this.ctx.strokeStyle = baseColor.toHex();
+
+  /* Stroke and fill to remove sub-pixel gaps */
   this.ctx.stroke();
   this.ctx.fill();
   this.ctx.restore();
@@ -290,7 +304,7 @@ Isomer.prototype._addPath = function (path, baseColor) {
   var brightness = Vector.dotProduct(normal, this.lightAngle);
   color = baseColor.lighten(brightness * this.colorDifference, this.lightColor);
 
-  this.canvas.path(path.points.map(this._translatePoint.bind(this)), color);
+  this.canvas.path(path.points.map(this._translatePoint.bind(this)), color, baseColor);
 };
 
 /**
