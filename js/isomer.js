@@ -6,7 +6,7 @@
  * Released under the MIT license
  * http://jdan.github.io/isomer/license.txt
  *
- * Date: 2014-05-12
+ * Date: 2014-05-21
  */
 !function(e){if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Isomer=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 /**
@@ -39,6 +39,8 @@ Canvas.prototype.path = function (points, color) {
 
   /* Set the strokeStyle and fillStyle */
   this.ctx.save()
+
+  this.ctx.globalAlpha = color.a;
   this.ctx.fillStyle = this.ctx.strokeStyle = color.toHex();
   this.ctx.stroke();
   this.ctx.fill();
@@ -53,10 +55,11 @@ module.exports = Canvas;
  *
  * Also holds HSL values
  */
-function Color(r, g, b) {
+function Color(r, g, b, a) {
   this.r = parseInt(r || 0);
   this.g = parseInt(g || 0);
   this.b = parseInt(b || 0);
+  this.a = parseFloat((Math.round(a * 100) / 100 || 1));
 
   this.loadHSL();
 };
@@ -83,7 +86,8 @@ Color.prototype.lighten = function (percentage, lightColor) {
   var newColor = new Color(
     (lightColor.r / 255) * this.r,
     (lightColor.g / 255) * this.g,
-    (lightColor.b / 255) * this.b
+    (lightColor.b / 255) * this.b,
+    this.a
   );
 
   newColor.l = Math.min(newColor.l + percentage, 1);
@@ -193,6 +197,8 @@ function Isomer(canvasId, options) {
 
   this.scale = options.scale || 70;
 
+  this._calculateTransformation();
+
   this.originX = options.originX || this.canvas.width / 2;
   this.originY = options.originY || this.canvas.height * 0.9;
 
@@ -226,11 +232,11 @@ Isomer.prototype._translatePoint = function (point) {
    * Y rides perpendicular to this angle (in isometric view: PI - angle)
    * Z affects the y coordinate of the drawn point
    */
-  var xMap = new Point(point.x * this.scale * Math.cos(this.angle),
-                       point.x * this.scale * Math.sin(this.angle));
+  var xMap = new Point(point.x * this.transformation[0][0],
+                       point.x * this.transformation[0][1]);
 
-  var yMap = new Point(point.y * this.scale * Math.cos(Math.PI - this.angle),
-                       point.y * this.scale * Math.sin(Math.PI - this.angle));
+  var yMap = new Point(point.y * this.transformation[1][0],
+                       point.y * this.transformation[1][1]);
 
   var x = this.originX + xMap.x + yMap.x;
   var y = this.originY - xMap.y - yMap.y - (point.z * this.scale);
@@ -241,7 +247,7 @@ Isomer.prototype._translatePoint = function (point) {
 /**
  * Adds a shape or path to the scene
  *
- * This method also accepts arrays or object collections
+ * This method also accepts arrays
  */
 Isomer.prototype.add = function (item, baseColor) {
   if (Object.prototype.toString.call(item) == '[object Array]') {
@@ -286,6 +292,23 @@ Isomer.prototype._addPath = function (path, baseColor) {
 
   this.canvas.path(path.points.map(this._translatePoint.bind(this)), color);
 };
+
+/**
+ * Precalculates transformation values based on the current angle and scale
+ * which in theory reduces costly cos and sin calls
+ */
+Isomer.prototype._calculateTransformation = function () {
+  this.transformation = [
+    [
+      this.scale * Math.cos(this.angle),
+      this.scale * Math.sin(this.angle)
+    ],
+    [
+      this.scale * Math.cos(Math.PI - this.angle),
+      this.scale * Math.sin(Math.PI - this.angle)
+    ]
+  ];
+}
 
 /* Namespace our primitives */
 Isomer.Canvas = Canvas;
