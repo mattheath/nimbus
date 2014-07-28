@@ -67,6 +67,19 @@
         }
       }
 
+      /**
+       * Translates a given object
+       *
+       * Simply a forward to Shape#translate
+       */
+      Object3D.prototype.translate = function () {
+        var args = arguments;
+        console.log(args)
+        return new Object3D(this.items.map(function (shape) {
+          return shape.translate.apply(shape, args);
+        }));
+      }
+
       Isomer.Object3D = Object3D;
 
 
