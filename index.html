@@ -122,8 +122,9 @@
         iso.add(EC2Instance(new Point(0, 1.5, 0), 'medium'));
         iso.add(EC2Instance(new Point(0, 0, 0), 'small'));
 
-
+        /* Example S3 and ELB */
         iso.add(S3(new Point(3, 0, 0)));
+        iso.add(ELB(new Point(3, 3, 0)));
 
       }
 
