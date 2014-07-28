@@ -66,3 +66,64 @@ S3 = function (origin) {
 
   return s
 }
+
+/**
+ * Basic ELB style object
+ */
+ELB = function (origin) {
+
+  // Make a collection object to hold everything
+  var e = new Isomer.Object3D();
+
+  // This gives a true octagonal prism
+  var cornerRadius = (1 - (1 / (1 + Math.sqrt(2)))) / 2;
+
+  // Adjust to match ELB shape
+  cornerRadius = cornerRadius * 0.85;
+
+  // Boundaries
+  var xMin = -1/2;
+  var xMax = 1/2;
+  var yMin = -1/2;
+  var yMax = 1/2;
+
+  // Helpers
+  var Path = Isomer.Path
+  var Point = Isomer.Point
+  var Shape = Isomer.Shape
+
+  // Calculate path vertices & extrude
+  var elb = Shape.extrude(new Path([
+    Point(xMax - cornerRadius, yMin, 0),
+    Point(xMin + cornerRadius, yMin, 0),
+    Point(xMin, yMin + cornerRadius, 0),
+    Point(xMin, yMax - cornerRadius, 0),
+    Point(xMin + cornerRadius, yMax, 0),
+    Point(xMax - cornerRadius, yMax, 0),
+    Point(xMax, yMax - cornerRadius, 0),
+    Point(xMax, yMin + cornerRadius, 0),
+  ]), 0.5);
+  elb.setColor(new Isomer.Color(195, 195, 195));
+  e.push(elb);
+
+  // Top face for color correction?
+  var f = new Path([
+    Point(xMax - cornerRadius, yMin, 0.5),
+    Point(xMin + cornerRadius, yMin, 0.5),
+    Point(xMin, yMin + cornerRadius, 0.5),
+    Point(xMin, yMax - cornerRadius, 0.5),
+    Point(xMin + cornerRadius, yMax, 0.5),
+    Point(xMax - cornerRadius, yMax, 0.5),
+    Point(xMax, yMax - cornerRadius, 0.5),
+    Point(xMax, yMin + cornerRadius, 0.5),
+  ])
+  f.setColor(new Isomer.Color(0, 195, 195));
+  e.push(f.reverse());
+
+  // Circular logo on top
+  var c = Path.Circle(new Point(0, 0, 0.5), 0.33, 20);
+  c.setColor(new Isomer.Color(255, 72, 72));
+  e.push(c);
+
+  return e.translate(origin.x, origin.y, origin.z)
+}
