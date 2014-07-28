@@ -82,10 +82,10 @@ ELB = function (origin) {
   cornerRadius = cornerRadius * 0.85;
 
   // Boundaries
-  var xMin = -1/2;
-  var xMax = 1/2;
-  var yMin = -1/2;
-  var yMax = 1/2;
+  var xMin = origin.x - 1/2;
+  var xMax = origin.x + 1/2;
+  var yMin = origin.y - 1/2;
+  var yMax = origin.y + 1/2;
 
   // Helpers
   var Path = Isomer.Path
@@ -106,24 +106,10 @@ ELB = function (origin) {
   elb.setColor(new Isomer.Color(195, 195, 195));
   e.push(elb);
 
-  // Top face for color correction?
-  var f = new Path([
-    Point(xMax - cornerRadius, yMin, 0.5),
-    Point(xMin + cornerRadius, yMin, 0.5),
-    Point(xMin, yMin + cornerRadius, 0.5),
-    Point(xMin, yMax - cornerRadius, 0.5),
-    Point(xMin + cornerRadius, yMax, 0.5),
-    Point(xMax - cornerRadius, yMax, 0.5),
-    Point(xMax, yMax - cornerRadius, 0.5),
-    Point(xMax, yMin + cornerRadius, 0.5),
-  ])
-  f.setColor(new Isomer.Color(0, 195, 195));
-  e.push(f.reverse());
-
   // Circular logo on top
-  var c = Path.Circle(new Point(0, 0, 0.5), 0.33, 20);
-  c.setColor(new Isomer.Color(255, 72, 72));
+  var c = Path.Circle(new Point(origin.x, origin.y, 0.5), 0.33, 20);
+  c.setColor(new Isomer.Color(72, 72, 72));
   e.push(c);
 
-  return e.translate(origin.x, origin.y, origin.z)
+  return e
 }
