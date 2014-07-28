@@ -20,7 +20,7 @@ EC2Instance = function (origin, size) {
 
   // Push in a base prism
   var base = Isomer.Shape.Prism(origin, 1, 1, height)
-  base.setColor(new Isomer.Color(160, 160, 160))
+  base.setColor(new Isomer.Color(195, 195, 195))
   i.push(base);
 
   // Add a logo on top
@@ -30,7 +30,7 @@ EC2Instance = function (origin, size) {
     origin.translate(0.3, 0.3, height),
     origin.translate(0.1, 0.3, height)
   ])
-  l.setColor(new Isomer.Color(100, 100, 100))
+  l.setColor(new Isomer.Color(72, 72, 72))
   i.push(l)
 
   return i
@@ -51,7 +51,7 @@ S3 = function (origin) {
 
   // Make our base shape
   var base = Isomer.Shape.Prism(origin, l, w, h)
-  base.setColor(new Isomer.Color(160, 160, 160))
+  base.setColor(new Isomer.Color(195, 195, 195))
   s.push(base);
 
   // Add a logo on top - currenly a square
@@ -61,7 +61,7 @@ S3 = function (origin) {
     origin.translate(l/2 + 0.2, w/2 + 0.2, h),
     origin.translate(l/2 - 0.2, w/2 + 0.2, h)
   ])
-  l.setColor(new Isomer.Color(100, 100, 100))
+  l.setColor(new Isomer.Color(72, 72, 72))
   s.push(l)
 
   return s
