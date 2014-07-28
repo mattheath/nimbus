@@ -42,14 +42,19 @@
         for (i = 0; i < paths.length; i++) {
           paths[i].color = color;
         }
+        this.paths = paths
       }
 
       /**
        * Build out a collection object which can contain lots of objects
        */
 
-      function Object3D() {
-        this.items = [];
+      function Object3D(shapes) {
+         if (Object.prototype.toString.call(shapes) === '[object Array]') {
+          this.items = shapes;
+        } else {
+          this.items = Array.prototype.slice.call(arguments);
+        }
       }
 
       Object3D.prototype.push = function (item) {
