@@ -101,8 +101,23 @@
 
       function scene() {
 
-        /* Add some instances */
+        /* Plane to infinity */
+        for (x = -100; x < 100; x++) {
+          iso.add(new Path([
+            new Point(x, -100, 0),
+            new Point(x, 100, 0),
+            new Point(x, -100, 0)
+          ]), new Color(50, 60, 160, 0.05));
+        }
+        for (y = -100; y < 100; y++) {
+          iso.add(new Path([
+            new Point(-100, y, 0),
+            new Point(100, y, 0),
+            new Point(-100, y, 0)
+          ]), new Color(50, 60, 160, 0.05));
+        }
 
+        /* Add some instances */
         iso.add(EC2Instance(new Point(0, 3, 0), 'large'));
         iso.add(EC2Instance(new Point(0, 1.5, 0), 'medium'));
         iso.add(EC2Instance(new Point(0, 0, 0), 'small'));
