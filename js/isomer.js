@@ -241,12 +241,16 @@ Isomer.prototype._translatePoint = function (point) {
 /**
  * Adds a shape or path to the scene
  *
- * This method also accepts arrays
+ * This method also accepts arrays or object collections
  */
 Isomer.prototype.add = function (item, baseColor) {
   if (Object.prototype.toString.call(item) == '[object Array]') {
     for (var i = 0; i < item.length; i++) {
       this.add(item[i], baseColor);
+    }
+  } else if (item instanceof Object3D) {
+    for (var i = 0; i < item.items.length; i++) {
+      this.add(item.items[i], baseColor);
     }
   } else if (item instanceof Path) {
     this._addPath(item, baseColor);
