@@ -265,7 +265,7 @@ Isomer.prototype.add = function (item, baseColor) {
  */
 Isomer.prototype._addPath = function (path, baseColor) {
   /* Default baseColor */
-  baseColor = baseColor || new Color(120, 120, 120);
+  baseColor = baseColor || path.color || new Color(120, 120, 120);
 
   /* Compute color */
   var v1 = Vector.fromTwoPoints(path.points[1], path.points[0]);
