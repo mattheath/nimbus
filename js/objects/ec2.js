@@ -94,14 +94,14 @@ ELB = function (origin) {
 
   // Calculate path vertices & extrude
   var elb = Shape.extrude(new Path([
-    Point(xMax - cornerRadius, yMin, 0),
-    Point(xMin + cornerRadius, yMin, 0),
-    Point(xMin, yMin + cornerRadius, 0),
-    Point(xMin, yMax - cornerRadius, 0),
-    Point(xMin + cornerRadius, yMax, 0),
-    Point(xMax - cornerRadius, yMax, 0),
-    Point(xMax, yMax - cornerRadius, 0),
     Point(xMax, yMin + cornerRadius, 0),
+    Point(xMax, yMax - cornerRadius, 0),
+    Point(xMax - cornerRadius, yMax, 0),
+    Point(xMin + cornerRadius, yMax, 0),
+    Point(xMin, yMax - cornerRadius, 0),
+    Point(xMin, yMin + cornerRadius, 0),
+    Point(xMin + cornerRadius, yMin, 0),
+    Point(xMax - cornerRadius, yMin, 0),
   ]), 0.5);
   elb.setColor(new Isomer.Color(195, 195, 195));
   e.push(elb);
