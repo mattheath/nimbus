@@ -61,12 +61,15 @@
         }
       }
 
-      Object3D.prototype.push = function (item) {
+      Object3D.prototype.push = function (item, color) {
         if (Object.prototype.toString.call(item) == '[object Array]') {
           for (var i = 0; i < item.length; i++) {
-            this.push(item[i]);
+            this.push(item[i], color);
           }
         } else {
+          if (color instanceof Isomer.Color) {
+            item.setColor(color);
+          }
           this.items.push(item);
         }
       }
