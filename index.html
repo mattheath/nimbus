@@ -126,16 +126,24 @@
           ]), new Color(50, 50, 50, 0.02));
         }
 
+        iso.add(EC2Instance(new Point(3.2, 4, 0), 'large'));
+
         /* Render S3 at back */
-        iso.add(S3(new Point(2.2, 1.75, 0)));
+        iso.add(S3(new Point(3.2, 1.75, 0)));
 
         /* Add some instances */
-        iso.add(EC2Instance(new Point(0, 3, 0), 'large'));
-        iso.add(EC2Instance(new Point(0, 1.5, 0), 'medium'));
-        iso.add(EC2Instance(new Point(0, 0, 0), 'small'));
+        iso.add(EC2Instance(new Point(1, 5.5, 0), 'medium'));
+        iso.add(EC2Instance(new Point(1, 4.25, 0), 'medium'));
+        iso.add(EC2Instance(new Point(1, 2.25, 0), 'medium'));
+        iso.add(EC2Instance(new Point(1, 1, 0), 'medium'));
+
+        iso.add(EC2Instance(new Point(-1, 5.5, 0), 'small'));
+        iso.add(EC2Instance(new Point(-1, 4.25, 0), 'small'));
+        iso.add(EC2Instance(new Point(-1, 2.25, 0), 'small'));
+        iso.add(EC2Instance(new Point(-1, 1, 0), 'small'));
 
         /* Other Examples */
-        iso.add(ELB(new Point(3, 0.5, 0)));
+        iso.add(ELB(new Point(4, 0.5, 0)));
 
       }
 
