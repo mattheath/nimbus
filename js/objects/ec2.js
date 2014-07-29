@@ -19,19 +19,16 @@ EC2Instance = function (origin, size) {
   var i = new Isomer.Object3D()
 
   // Push in a base prism
-  var base = Isomer.Shape.Prism(origin, 1, 1, height)
-  base.setColor(new Isomer.Color(195, 195, 195))
-  i.push(base);
+  i.push(Isomer.Shape.Prism(origin, 1, 1, height),
+    new Isomer.Color(195, 195, 195));
 
   // Add a logo on top
-  var l = new Isomer.Path([
+  i.push(new Isomer.Path([
     origin.translate(0.1, 0.1, height),
     origin.translate(0.3, 0.1, height),
     origin.translate(0.3, 0.3, height),
     origin.translate(0.1, 0.3, height)
-  ])
-  l.setColor(new Isomer.Color(72, 72, 72))
-  i.push(l)
+  ]), new Isomer.Color(72, 72, 72));
 
   return i
 }
@@ -50,19 +47,16 @@ S3 = function (origin) {
   var l = w * 1.5;
 
   // Make our base shape
-  var base = Isomer.Shape.Prism(origin, l, w, h)
-  base.setColor(new Isomer.Color(195, 195, 195))
-  s.push(base);
+  s.push(Isomer.Shape.Prism(origin, l, w, h),
+    new Isomer.Color(195, 195, 195));
 
   // Add a logo on top - currenly a square
-  var l = new Isomer.Path([
+  s.push(new Isomer.Path([
     origin.translate(l/2 - 0.2, w/2 - 0.2, h),
     origin.translate(l/2 + 0.2, w/2 - 0.2, h),
     origin.translate(l/2 + 0.2, w/2 + 0.2, h),
     origin.translate(l/2 - 0.2, w/2 + 0.2, h)
-  ])
-  l.setColor(new Isomer.Color(72, 72, 72))
-  s.push(l)
+  ]), new Isomer.Color(72, 72, 72));
 
   return s
 }
@@ -73,7 +67,7 @@ S3 = function (origin) {
 ELB = function (origin) {
 
   // Make a collection object to hold everything
-  var e = new Isomer.Object3D();
+  var elb = new Isomer.Object3D();
 
   // This gives a true octagonal prism
   var cornerRadius = (1 - (1 / (1 + Math.sqrt(2)))) / 2;
@@ -93,7 +87,7 @@ ELB = function (origin) {
   var Shape = Isomer.Shape
 
   // Calculate path vertices & extrude
-  var elb = Shape.extrude(new Path([
+  elb.push(Shape.extrude(new Path([
     Point(xMax, yMin + cornerRadius, 0),
     Point(xMax, yMax - cornerRadius, 0),
     Point(xMax - cornerRadius, yMax, 0),
@@ -102,14 +96,11 @@ ELB = function (origin) {
     Point(xMin, yMin + cornerRadius, 0),
     Point(xMin + cornerRadius, yMin, 0),
     Point(xMax - cornerRadius, yMin, 0),
-  ]), 0.5);
-  elb.setColor(new Isomer.Color(195, 195, 195));
-  e.push(elb);
+  ]), 0.5), new Isomer.Color(195, 195, 195));
 
   // Circular logo on top
-  var c = Path.Circle(new Point(origin.x, origin.y, 0.5), 0.33, 20);
-  c.setColor(new Isomer.Color(72, 72, 72));
-  e.push(c);
+  elb.push(Path.Circle(new Point(origin.x, origin.y, 0.5), 0.33, 20),
+    new Isomer.Color(72, 72, 72));
 
-  return e
+  return elb
 }
