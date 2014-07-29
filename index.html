@@ -24,8 +24,10 @@
     <script>
       // Cruft to make the canvas fill the screen
       var ctx = document.getElementById("canvas");
-      ctx.width  = window.innerWidth;
-      ctx.height = window.innerHeight;
+      if (window.innerWidth > 1000 && window.innerHeight > 700) {
+        ctx.width  = window.innerWidth;
+        ctx.height = window.innerHeight;
+      }
 
       /**
        * Let the Isomer hacks begin!
@@ -130,8 +132,8 @@
         iso.add(EC2Instance(new Point(0, 0, 0), 'small'));
 
         /* Example S3 and ELB */
-        iso.add(S3(new Point(3, 0, 0)));
         iso.add(ELB(new Point(3, 3, 0)));
+        iso.add(S3(new Point(2, 0, 0)));
 
       }
 
