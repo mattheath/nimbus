@@ -22,6 +22,10 @@
   <body>
     <canvas id="canvas" width="1000" height="700"></canvas>
     <script>
+      // Cruft to make the canvas fill the screen
+      var ctx = document.getElementById("canvas");
+      ctx.width  = window.innerWidth;
+      ctx.height = window.innerHeight;
 
       /**
        * Let the Isomer hacks begin!
