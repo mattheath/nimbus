@@ -126,14 +126,16 @@
           ]), new Color(50, 50, 50, 0.02));
         }
 
+        /* Render S3 at back */
+        iso.add(S3(new Point(2.2, 1.75, 0)));
+
         /* Add some instances */
         iso.add(EC2Instance(new Point(0, 3, 0), 'large'));
         iso.add(EC2Instance(new Point(0, 1.5, 0), 'medium'));
         iso.add(EC2Instance(new Point(0, 0, 0), 'small'));
 
-        /* Example S3 and ELB */
-        iso.add(ELB(new Point(3, 3, 0)));
-        iso.add(S3(new Point(2, 0, 0)));
+        /* Other Examples */
+        iso.add(ELB(new Point(3, 0.5, 0)));
 
       }
 
