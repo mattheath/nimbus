@@ -4,14 +4,14 @@
  */
 EC2Instance = function (origin, size) {
 
-  // Set height based on instance size
-  var height = 0.5;
+  // Set z based on instance size
+  var z = 0.5;
   switch (size) {
     case 'large':
-      height = 2;
+      z = 2;
     break;
     case 'medium':
-      height = 1;
+      z = 1;
     break;
   }
 
@@ -19,16 +19,51 @@ EC2Instance = function (origin, size) {
   var i = new Isomer.Object3D()
 
   // Push in a base prism
-  i.push(Isomer.Shape.Prism(origin, 1, 1, height),
-    new Isomer.Color(195, 195, 195));
+  i.push(Isomer.Shape.Prism(origin, 1, 1, z),
+    new Isomer.Color(195, 195, 195, 1));
 
   // Add a logo on top
   i.push(new Isomer.Path([
-    origin.translate(0.1, 0.1, height),
-    origin.translate(0.3, 0.1, height),
-    origin.translate(0.3, 0.3, height),
-    origin.translate(0.1, 0.3, height)
+    origin.translate(0.1, 0.1, z),
+    origin.translate(0.3, 0.1, z),
+    origin.translate(0.3, 0.3, z),
+    origin.translate(0.1, 0.3, z)
   ]), new Isomer.Color(72, 72, 72));
+
+  // Draw outline...
+  // Must be a better way to do this
+  i.push([
+      new Path([
+        new Point(origin.x, origin.y + 1, 0),
+        new Point(origin.x, origin.y + 1, z),
+        new Point(origin.x, origin.y + 1, 0)
+      ]),
+      new Path([
+        new Point(origin.x, origin.y + 1, z),
+        new Point(origin.x + 1, origin.y + 1, z),
+        new Point(origin.x, origin.y + 1, z)
+      ]),
+      new Path([
+        new Point(origin.x + 1, origin.y + 1, z),
+        new Point(origin.x + 1, origin.y, z),
+        new Point(origin.x + 1, origin.y + 1, z)
+      ]),
+      new Path([
+        new Point(origin.x + 1, origin.y, 0),
+        new Point(origin.x + 1, origin.y, z),
+        new Point(origin.x + 1, origin.y, 0)
+      ]),
+      new Path([
+        new Point(origin.x + 1, origin.y, 0),
+        new Point(origin.x, origin.y, 0),
+        new Point(origin.x + 1, origin.y, 0)
+      ]),
+      new Path([
+        new Point(origin.x, origin.y, 0),
+        new Point(origin.x, origin.y + 1, 0),
+        new Point(origin.x, origin.y, 0)
+      ])
+  ], new Isomer.Color(33, 33, 33));
 
   return i
 }
@@ -43,7 +78,7 @@ S3 = function (origin) {
 
   // Sizing
   var w = 1.5;
-  var h = w;
+  var h = z = w;
   var l = w * 1.5;
 
   // Make our base shape
@@ -57,6 +92,39 @@ S3 = function (origin) {
     origin.translate(l/2 + 0.2, w/2 + 0.2, h),
     origin.translate(l/2 - 0.2, w/2 + 0.2, h)
   ]), new Isomer.Color(72, 72, 72));
+
+  s.push([
+      new Path([
+        new Point(origin.x, origin.y + w, 0),
+        new Point(origin.x, origin.y + w, z),
+        new Point(origin.x, origin.y + w, 0)
+      ]),
+      new Path([
+        new Point(origin.x, origin.y + w, z),
+        new Point(origin.x + l, origin.y + w, z),
+        new Point(origin.x, origin.y + w, z)
+      ]),
+      new Path([
+        new Point(origin.x + l, origin.y + w, z),
+        new Point(origin.x + l, origin.y, z),
+        new Point(origin.x + l, origin.y + w, z)
+      ]),
+      new Path([
+        new Point(origin.x + l, origin.y, 0),
+        new Point(origin.x + l, origin.y, z),
+        new Point(origin.x + l, origin.y, 0)
+      ]),
+      new Path([
+        new Point(origin.x + l, origin.y, 0),
+        new Point(origin.x, origin.y, 0),
+        new Point(origin.x + l, origin.y, 0)
+      ]),
+      new Path([
+        new Point(origin.x, origin.y, 0),
+        new Point(origin.x, origin.y + w, 0),
+        new Point(origin.x, origin.y, 0)
+      ])
+  ], new Isomer.Color(33, 33, 33));
 
   return s
 }
