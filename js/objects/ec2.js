@@ -148,6 +148,8 @@ ELB = function (origin) {
   var xMax = origin.x + 1/2;
   var yMin = origin.y - 1/2;
   var yMax = origin.y + 1/2;
+  var zMin = 0;
+  var zMax = 0.5;
 
   // Helpers
   var Path = Isomer.Path
@@ -164,11 +166,65 @@ ELB = function (origin) {
     Point(xMin, yMin + cornerRadius, 0),
     Point(xMin + cornerRadius, yMin, 0),
     Point(xMax - cornerRadius, yMin, 0),
-  ]), 0.5), new Isomer.Color(195, 195, 195));
+  ]), zMax), new Isomer.Color(195, 195, 195));
 
   // Circular logo on top
-  elb.push(Path.Circle(new Point(origin.x, origin.y, 0.5), 0.33, 20),
+  elb.push(Path.Circle(new Point(origin.x, origin.y, zMax), 0.33, 20),
     new Isomer.Color(72, 72, 72));
+
+  // Push in outline
+  elb.push([
+      new Path([
+        new Point(xMin, yMax - cornerRadius, zMin),
+        new Point(xMin, yMax - cornerRadius, zMax),
+        new Point(xMin, yMax - cornerRadius, zMin)
+      ]),
+      new Path([
+        new Point(xMin, yMax - cornerRadius, zMax),
+        new Point(xMin + cornerRadius, yMax, zMax),
+        new Point(xMin, yMax - cornerRadius, zMax)
+      ]),
+      new Path([
+        new Point(xMax - cornerRadius, yMax, zMax),
+        new Point(xMin + cornerRadius, yMax, zMax),
+        new Point(xMax - cornerRadius, yMax, zMax)
+      ]),
+      new Path([
+        new Point(xMax - cornerRadius, yMax, zMax),
+        new Point(xMax, yMax - cornerRadius, zMax),
+        new Point(xMax - cornerRadius, yMax, zMax)
+      ]),
+      new Path([
+        new Point(xMax, yMax - cornerRadius, zMax),
+        new Point(xMax, yMin + cornerRadius, zMax),
+        new Point(xMax, yMax - cornerRadius, zMax)
+      ]),
+      new Path([
+        new Point(xMax, yMin + cornerRadius, zMax),
+        new Point(xMax - cornerRadius, yMin, zMax),
+        new Point(xMax, yMin + cornerRadius, zMax)
+      ]),
+      new Path([
+        new Point(xMax - cornerRadius, yMin, zMax),
+        new Point(xMax - cornerRadius, yMin, zMin),
+        new Point(xMax - cornerRadius, yMin, zMax)
+      ]),
+      new Path([
+        new Point(xMax - cornerRadius, yMin, zMin),
+        new Point(xMin + cornerRadius, yMin, zMin),
+        new Point(xMax - cornerRadius, yMin, zMin)
+      ]),
+      new Path([
+        new Point(xMin + cornerRadius, yMin, zMin),
+        new Point(xMin, yMin + cornerRadius, zMin),
+        new Point(xMin + cornerRadius, yMin, zMin)
+      ]),
+      new Path([
+        new Point(xMin, yMin + cornerRadius, zMin),
+        new Point(xMin, yMax - cornerRadius, zMin),
+        new Point(xMin, yMin + cornerRadius, zMin)
+      ])
+  ], new Isomer.Color(33, 33, 33));
 
   return elb
 }
