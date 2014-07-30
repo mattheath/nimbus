@@ -93,6 +93,7 @@ S3 = function (origin) {
     origin.translate(l/2 - 0.2, w/2 + 0.2, h)
   ]), new Isomer.Color(72, 72, 72));
 
+  // Outline
   s.push([
       new Path([
         new Point(origin.x, origin.y + w, 0),
@@ -125,6 +126,46 @@ S3 = function (origin) {
         new Point(origin.x, origin.y, 0)
       ])
   ], new Isomer.Color(33, 33, 33));
+
+  // Inner lines
+  s.push([
+      new Path([
+        new Point(origin.x + l/3, origin.y, z),
+        new Point(origin.x + l/3, origin.y + w, z),
+        new Point(origin.x + l/3, origin.y, z)
+      ]),
+      new Path([
+        new Point(origin.x + 2 * l/3, origin.y, z),
+        new Point(origin.x + 2 * l/3, origin.y + w, z),
+        new Point(origin.x + 2 * l/3, origin.y, z)
+      ]),
+      new Path([
+        new Point(origin.x + l/3, origin.y, 0),
+        new Point(origin.x + l/3, origin.y, z),
+        new Point(origin.x + l/3, origin.y, 0)
+      ]),
+      new Path([
+        new Point(origin.x + 2 * l/3, origin.y, 0),
+        new Point(origin.x + 2 * l/3, origin.y, z),
+        new Point(origin.x + 2 * l/3, origin.y, 0)
+      ]),
+      new Path([
+        new Point(origin.x, origin.y + w/2, 0),
+        new Point(origin.x, origin.y + w/2, z),
+        new Point(origin.x, origin.y + w/2, 0)
+      ]),
+      new Path([
+        new Point(origin.x, origin.y + w/2, z),
+        new Point(origin.x + l/3, origin.y + w/2, z),
+        new Point(origin.x, origin.y + w/2, z)
+      ]),
+      new Path([
+        new Point(origin.x + 2 * l / 3, origin.y + w/2, z),
+        new Point(origin.x + l, origin.y + w/2, z),
+        new Point(origin.x + 2 * l / 3, origin.y + w/2, z)
+      ])
+  ]);
+
 
   return s
 }
