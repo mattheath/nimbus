@@ -274,7 +274,7 @@ Route53 = function (origin) {
 
   var r53 = new Isomer.Object3D();
 
-  var a = 2.5; // triangle side length
+  var a = 2; // triangle side length
   var h = a * (Math.sqrt(3)/2);
   var b = a * 0.17; // corner cutoff amount
   var h1 = b * (Math.sqrt(3)/2);
