@@ -341,5 +341,13 @@ Route53 = function (origin) {
   ]);
   r53.push(outline);
 
+  // Add a logo on top - currenly a square
+  r53.push(new Isomer.Path([
+    origin.translate(-0.2, -0.2, z),
+    origin.translate(0.2, -0.2, z),
+    origin.translate(0.2, 0.2, z),
+    origin.translate(-0.2, 0.2, z)
+  ]), new Isomer.Color(72, 72, 72));
+
   return r53
 }
