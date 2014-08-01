@@ -13,6 +13,7 @@
     <script src="js/isomer.js"></script>
 
     <!-- Objects -->
+    <script src="js/objects/primatives.js"></script>
     <script src="js/objects/ec2.js"></script>
 
     <!-- Reset CSS styles -->
@@ -161,6 +162,9 @@
           ]), new Color(50, 50, 50, 0.02));
         }
 
+        // Origin marker
+        iso.add(originMarker())
+
         iso.add(EC2Instance(new Point(3.2, 4, 0), 'large'));
 
         /* Render S3 at back */
@@ -179,7 +183,8 @@
 
         /* Other Examples */
         iso.add(ELB(new Point(-2.25, 3.75, 0)));
-        iso.add(Route53(new Point(-4, 5.75, 0)))
+        iso.add(Route53(new Point(4, 7, 0)));
+        iso.add(new RDS(new Point(3,0,0)));
       }
 
       scene()
