@@ -17,6 +17,7 @@
     <script src="js/objects/aws/ec2.js"></script>
     <script src="js/objects/aws/rds.js"></script>
     <script src="js/objects/aws/route53.js"></script>
+    <script src="js/objects/aws/cloudfront.js"></script>
 
     <!-- Reset CSS styles -->
     <link href="css/reset.css" rel="stylesheet">
@@ -187,6 +188,8 @@
         iso.add(ELB(new Point(-2.25, 3.75, 0)));
         iso.add(Route53(new Point(4, 7, 0)));
         iso.add(new RDS(new Point(3,0,0)));
+
+        iso.add(new Cloudfront(new Point(3.5,9.5,0)));
       }
 
       scene()
