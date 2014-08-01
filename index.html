@@ -91,6 +91,41 @@
 
       Isomer.Object3D = Object3D;
 
+      /**
+       * Helpers
+       */
+
+      function originMarker() {
+
+        var o = new Isomer.Object3D()
+
+        var x = new Path([
+            new Point(0, 0, 0),
+            new Point(1, 0, 0),    // x
+            new Point(1, 0.01, 0), // x
+            new Point(0, 0.01, 0),
+        ])
+        x.setColor(new Color(255, 0, 0))
+
+        var y = new Path([
+            new Point(0, 0, 0),
+            new Point(0, 1, 0),    // y
+            new Point(0.01, 1, 0), // y
+            new Point(0.01, 0, 0),
+        ])
+        y.setColor(new Color(0, 255, 0))
+
+        var z = new Path([
+            new Point(0, 0, 0),
+            new Point(0, 0, 1),    // z
+            new Point(0.01, 0, 1), // z
+            new Point(0.01, 0, 0),
+        ])
+        z.setColor(new Color(0, 0, 255))
+
+        o.push([x, y, z])
+        return o
+      }
 
       /**
        * Kick off our diagrams
