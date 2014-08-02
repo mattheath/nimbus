@@ -18,6 +18,7 @@
     <script src="js/objects/aws/rds.js"></script>
     <script src="js/objects/aws/route53.js"></script>
     <script src="js/objects/aws/cloudfront.js"></script>
+    <script src="js/objects/aws/dynamo.js"></script>
 
     <!-- Reset CSS styles -->
     <link href="css/reset.css" rel="stylesheet">
@@ -190,6 +191,8 @@
         iso.add(new RDS(new Point(3,0,0)));
 
         iso.add(new Cloudfront(new Point(3.5,9.5,0)));
+
+        iso.add(new DynamoDB(new Point(8,8,0)));
       }
 
       scene()
