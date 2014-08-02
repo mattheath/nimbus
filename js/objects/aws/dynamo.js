@@ -34,24 +34,27 @@ DynamoDB = function (origin) {
 	]);
 
 	/* Draw the side faces for each section which we then rotate into position */
+
+	// Outward face
 	var face1 = new Path([
 		origin.translate(-w/2 + c, -w/2, 0),
 		origin.translate(w/2 - c, -w/2, 0),
 		origin.translate(w/2 - c, -w/2, h),
 		origin.translate(-w/2 + c, -w/2, h),
 	]);
+
+	// Side face
 	var face2 = new Path([
 		origin.translate(-w/2 + c, -w/2 + c, 0),
 		origin.translate(-w/2 + c, -w/2, 0),
 		origin.translate(-w/2 + c, -w/2, h),
 		origin.translate(-w/2 + c, -w/2 + c, t),
 	]);
-	var face3 = new Path([
-		origin.translate(w/2 - c, -w/2 + c, 0),
-		origin.translate(w/2 - c, -w/2, 0),
-		origin.translate(w/2 - c, -w/2, h),
-		origin.translate(w/2 - c, -w/2 + c, t),
-	]);
+
+	// Move and flip to make opposing side
+	var face3 = face2.translate(w - 2*c, 0, 0).reverse();
+
+	// Top sloping face
 	var face4 = new Path([
 		origin.translate(w/2 - c, -w/2, h),
 		origin.translate(w/2 - c, -w/2 + c, t),
@@ -91,21 +94,6 @@ DynamoDB = function (origin) {
 	]).reverse(), new Isomer.Color(72, 72, 72));
 
 	// Draw outline
-	var bottomFace = new Path([
-		origin.translate(-w/2 + c, -w/2, 0),
-		origin.translate(w/2 - c, -w/2, 0),
-		origin.translate(w/2 - c, -w/2 + c, 0),
-		origin.translate(w/2, -w/2 + c, 0),
-		origin.translate(w/2, w/2 - c, 0),
-		origin.translate(w/2 - c, w/2 - c, 0),
-		origin.translate(w/2 - c, w/2, 0),
-		origin.translate(-w/2 + c, w/2, 0),
-		origin.translate(-w/2 + c, w/2 - c, 0),
-		origin.translate(-w/2, w/2 - c, 0),
-		origin.translate(-w/2, -w/2 + c, 0),
-		origin.translate(-w/2 + c, -w/2 + c, 0),
-	]);
-
 	var outline = new Isomer.Object3D()
 	outline.push([
 		new Path([
