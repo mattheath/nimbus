@@ -46,8 +46,8 @@ Cloudfront = function (origin) {
 
 
 	// Push in order to prevent clipping
-  	cf.push(face1.rotateZ(origin, Math.PI).reverse(), new Isomer.Color(195, 195, 195))
-  	cf.push(face2.rotateZ(origin, Math.PI), new Isomer.Color(195, 195, 195))
+	cf.push(face1.rotateZ(origin, Math.PI).reverse(), new Isomer.Color(195, 195, 195))
+	cf.push(face2.rotateZ(origin, Math.PI), new Isomer.Color(195, 195, 195))
 	cf.push(base, new Isomer.Color(195, 195, 195));
 	cf.push(face1, new Isomer.Color(195, 195, 195));
 	cf.push(face2, new Isomer.Color(195, 195, 195));
@@ -66,6 +66,74 @@ Cloudfront = function (origin) {
 		origin.translate(-dx/2, -0.2, z/2 + 0.3 + edgeSize),
 		origin.translate(-dx/2, -0.2, z/2 - 0.3 + edgeSize),
 	]), new Isomer.Color(72, 72, 72));
+
+	// Add outline
+	var outline = new Isomer.Object3D()
+	outline.push([
+		new Path([
+			origin.translate(-dx/2, dy/2, edgeSize),
+			origin.translate(-dx/2, dy/2 + edgeSize, 0),
+			origin.translate(-dx/2, dy/2, edgeSize),
+		]),
+		new Path([
+			origin.translate(-dx/2, dy/2 + edgeSize, 0),
+			origin.translate(-dx/2 - edgeSize, dy/2, 0),
+			origin.translate(-dx/2, dy/2 + edgeSize, 0),
+		]),
+		new Path([
+			origin.translate(-dx/2 - edgeSize, dy/2, 0),
+			origin.translate(-dx/2 - edgeSize, -dy/2, 0),
+			origin.translate(-dx/2 - edgeSize, dy/2, 0),
+		]),
+		new Path([
+			origin.translate(-dx/2 - edgeSize, -dy/2, 0),
+			origin.translate(-dx/2, -dy/2 - edgeSize, 0),
+			origin.translate(-dx/2 - edgeSize, -dy/2, 0),
+		]),
+		new Path([
+			origin.translate(-dx/2, -dy/2 - edgeSize, 0),
+			origin.translate(dx/2, -dy/2 - edgeSize, 0),
+			origin.translate(-dx/2, -dy/2 - edgeSize, 0),
+		]),
+		new Path([
+			origin.translate(dx/2, -dy/2 - edgeSize, 0),
+			origin.translate(dx/2 + edgeSize, -dy/2, 0),
+			origin.translate(dx/2, -dy/2 - edgeSize, 0),
+		]),
+		new Path([
+			origin.translate(dx/2, -dy/2 - edgeSize, 0),
+			origin.translate(dx/2 + edgeSize, -dy/2, 0),
+			origin.translate(dx/2, -dy/2 - edgeSize, 0),
+		]),
+		new Path([
+			origin.translate(dx/2 + edgeSize, -dy/2, 0),
+			origin.translate(dx/2, -dy/2, edgeSize),
+			origin.translate(dx/2 + edgeSize, -dy/2, 0),
+		]),
+		new Path([
+			origin.translate(dx/2, -dy/2, edgeSize),
+			origin.translate(dx/2, -dy/2, z),
+			origin.translate(dx/2, -dy/2, edgeSize),
+		]),
+		new Path([
+			origin.translate(dx/2, -dy/2, z),
+			origin.translate(dx/2, dy/2, z),
+			origin.translate(dx/2, -dy/2, z),
+		]),
+		new Path([
+			origin.translate(dx/2, dy/2, z),
+			origin.translate(-dx/2, dy/2, z),
+			origin.translate(dx/2, dy/2, z),
+		]),
+		new Path([
+			origin.translate(-dx/2, dy/2, z),
+			origin.translate(-dx/2, dy/2, edgeSize),
+			origin.translate(-dx/2, dy/2, z),
+		]),
+	])
+
+	cf.push(outline)
+
 
 	return cf
 }
