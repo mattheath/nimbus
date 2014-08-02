@@ -191,14 +191,14 @@ OutlinedCuboctahedron = function (origin, c, bc) {
   return oc
 }
 
-OutlinedCross = function (origin) {
+OutlinedCross = function (origin, w, h, c, t) {
 
   var cross = new Isomer.Object3D();
 
-  var w = 2;         // width
-  var h = w*0.75;    // overall height
-  var c = 0.5;       // corner radius
-  var t = h - c*0.5; // height of top (centre)
+  var w = w || 2; // width
+  var h = h || w; // overall height
+  var c = c || 0; // corner radius
+  var t = t || h; // height of top (centre)
   var faces = [];
 
   /* Draw the bottom */
@@ -268,14 +268,6 @@ OutlinedCross = function (origin) {
   var s = new Shape(faces)
   s.setColor(new Isomer.Color(195, 195, 195));
   cross.push(s)
-
-  // Add a logo on top
-  cross.push(new Isomer.Path([
-    origin.translate(-0.3, 0.3, t),
-    origin.translate(0.3, 0.3, t),
-    origin.translate(0.3, -0.3, t),
-    origin.translate(-0.3, -0.3, t),
-  ]).reverse(), new Isomer.Color(72, 72, 72));
 
   // Draw outline
   var outline = new Isomer.Object3D()
