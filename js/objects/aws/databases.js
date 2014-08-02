@@ -1,10 +1,29 @@
 /**
- * Dynamo - Amazon's managed NoSQL database service
+ * RDS - Relational Database Service
  *
- * Provides icons and objects for DynamoDB
+ * RDS returns an RDS instance at a given position
  */
+RDS = function (origin) {
+
+  var rds = new Isomer.Object3D()
+
+  // Outlined cuboctahedron with flat base
+  rds.push(new OutlinedCuboctahedron(origin, 0.25, 0))
+
+  // Add a logo on top - currenly a square
+  rds.push(new Isomer.Path([
+    origin.translate(-0.2, -0.2, 1),
+    origin.translate(0.2, -0.2, 1),
+    origin.translate(0.2, 0.2, 1),
+    origin.translate(-0.2, 0.2, 1)
+  ]), new Isomer.Color(72, 72, 72));
+
+  return rds
+}
 
 /**
+ * DynamoDB - Amazon's managed NoSQL database service
+ *
  * DynamoDB returns an icon representing a DynamoDB instance
  */
 DynamoDB = function (origin) {
