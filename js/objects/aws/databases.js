@@ -8,7 +8,7 @@ RDS = function (origin) {
   var rds = new Isomer.Object3D()
 
   // Outlined cuboctahedron with flat base
-  rds.push(new OutlinedCuboctahedron(origin, 0.25, 0))
+  rds.push(new OutlinedCuboctahedron(origin, 1, 1, 0.25, 0))
 
   // Add a logo on top - currenly a square
   rds.push(new Isomer.Path([

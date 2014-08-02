@@ -2,9 +2,6 @@ Cuboctahedron = function (origin, w, h, c, bc) {
 
   var w = w || 1
   var h = h || w
-
-  /* Declare the center of the shape to make rotations easy */
-  var center = origin; //.translate(0.5, 0.5, 0);
   var faces = [];
 
   // Corner sizes, for a full cuboctahedron these should be equal,
@@ -25,78 +22,78 @@ Cuboctahedron = function (origin, w, h, c, bc) {
   /* Draw the side faces */
   if (bc > 0) {
     var sideFace = new Path([
-      center.translate(w/2, w/2, 0 + bc),
-      center.translate(w/2 - bc, w/2, 0),
-      center.translate(-w/2 + bc, w/2, 0),
-      center.translate(-w/2, w/2, 0 + bc),
-      center.translate(-w/2, w/2, h - c), // left lower corner of top
-      center.translate(-w/2 + c, w/2, h), // left top corner
-      center.translate(w/2 - c, w/2, h),  // right top corner
-      center.translate(w/2, w/2, h - c),  // right lower corner of top
+      origin.translate(w/2, w/2, 0 + bc),
+      origin.translate(w/2 - bc, w/2, 0),
+      origin.translate(-w/2 + bc, w/2, 0),
+      origin.translate(-w/2, w/2, 0 + bc),
+      origin.translate(-w/2, w/2, h - c), // left lower corner of top
+      origin.translate(-w/2 + c, w/2, h), // left top corner
+      origin.translate(w/2 - c, w/2, h),  // right top corner
+      origin.translate(w/2, w/2, h - c),  // right lower corner of top
     ]);
   } else {
     // paths with multiple points that are the same current render as black
     var sideFace = new Path([
-      center.translate(w/2, w/2, 0 + bc),
-      center.translate(-w/2, w/2, 0 + bc),
-      center.translate(-w/2, w/2, h - c), // left lower corner of top
-      center.translate(-w/2 + c, w/2, h), // left top corner
-      center.translate(w/2 - c, w/2, h),  // right top corner
-      center.translate(w/2, w/2, h - c),  // right lower corner of top
+      origin.translate(w/2, w/2, 0 + bc),
+      origin.translate(-w/2, w/2, 0 + bc),
+      origin.translate(-w/2, w/2, h - c), // left lower corner of top
+      origin.translate(-w/2 + c, w/2, h), // left top corner
+      origin.translate(w/2 - c, w/2, h),  // right top corner
+      origin.translate(w/2, w/2, h - c),  // right lower corner of top
     ]);
   }
 
   var topTriangleFace = new Path([
-    center.translate(-w/2, w/2, h - c),
-    center.translate(-w/2 + c, w/2, h),
-    center.translate(-w/2, w/2 - c, h),
+    origin.translate(-w/2, w/2, h - c),
+    origin.translate(-w/2 + c, w/2, h),
+    origin.translate(-w/2, w/2 - c, h),
   ]);
   var bottomTriangleFace = new Path([
-    center.translate(-w/2, w/2, 0 + bc),
-    center.translate(-w/2 + bc, w/2, 0),
-    center.translate(-w/2, w/2 - bc, 0),
+    origin.translate(-w/2, w/2, 0 + bc),
+    origin.translate(-w/2 + bc, w/2, 0),
+    origin.translate(-w/2, w/2 - bc, 0),
   ]);
 
   /* Draw the top */
   var topFace = new Path([
-    center.translate(w/2, w/2 - c, h),
-    center.translate(w/2 - c, w/2, h),
-    center.translate(-w/2 + c, w/2, h),
-    center.translate(-w/2, w/2 - c, h),
-    center.translate(-w/2, -w/2 + c, h),
-    center.translate(-w/2 + c, -w/2, h),
-    center.translate(w/2 - c, -w/2, h),
-    center.translate(w/2, -w/2 + c, h),
+    origin.translate(w/2, w/2 - c, h),
+    origin.translate(w/2 - c, w/2, h),
+    origin.translate(-w/2 + c, w/2, h),
+    origin.translate(-w/2, w/2 - c, h),
+    origin.translate(-w/2, -w/2 + c, h),
+    origin.translate(-w/2 + c, -w/2, h),
+    origin.translate(w/2 - c, -w/2, h),
+    origin.translate(w/2, -w/2 + c, h),
   ]);
 
   /* Draw the bottom */
   if (bc == 0) {
     var bottomFace = new Path([
-      center.translate(w/2, w/2 - bc, 0),
-      center.translate(-w/2, w/2 - bc, 0),
-      center.translate(-w/2, -w/2 + bc, 0),
-      center.translate(w/2, -w/2 + bc, 0),
+      origin.translate(w/2, w/2 - bc, 0),
+      origin.translate(-w/2, w/2 - bc, 0),
+      origin.translate(-w/2, -w/2 + bc, 0),
+      origin.translate(w/2, -w/2 + bc, 0),
     ]);
   } else {
     var bottomFace = new Path([
-      center.translate(w/2, w/2 - bc, 0),
-      center.translate(w/2 - bc, w/2, 0),
-      center.translate(-w/2 + bc, w/2, 0),
-      center.translate(-w/2, w/2 - bc, 0),
-      center.translate(-w/2, -w/2 + bc, 0),
-      center.translate(-w/2 + bc, -w/2, 0),
-      center.translate(w/2 - bc, -w/2, 0),
-      center.translate(w/2, -w/2 + bc, 0),
+      origin.translate(w/2, w/2 - bc, 0),
+      origin.translate(w/2 - bc, w/2, 0),
+      origin.translate(-w/2 + bc, w/2, 0),
+      origin.translate(-w/2, w/2 - bc, 0),
+      origin.translate(-w/2, -w/2 + bc, 0),
+      origin.translate(-w/2 + bc, -w/2, 0),
+      origin.translate(w/2 - bc, -w/2, 0),
+      origin.translate(w/2, -w/2 + bc, 0),
     ]);
   }
 
   // Push in all the faces
   faces.push(bottomFace);
   for (var i = 0; i < 4; i++) {
-    faces.push(sideFace.rotateZ(center, i * Math.PI / 2));
-    faces.push(topTriangleFace.rotateZ(center, i * Math.PI / 2));
+    faces.push(sideFace.rotateZ(origin, i * Math.PI / 2));
+    faces.push(topTriangleFace.rotateZ(origin, i * Math.PI / 2));
     if (bc > 0) {
-      faces.push(bottomTriangleFace.rotateZ(center, i * Math.PI / 2));
+      faces.push(bottomTriangleFace.rotateZ(origin, i * Math.PI / 2));
     }
   }
   faces.push(topFace);
