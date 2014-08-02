@@ -1,4 +1,8 @@
-Cuboctahedron = function (origin, c, bc) {
+Cuboctahedron = function (origin, w, h, c, bc) {
+
+  var w = w || 1
+  var h = h || w
+
   /* Declare the center of the shape to make rotations easy */
   var center = origin; //.translate(0.5, 0.5, 0);
   var faces = [];
@@ -21,68 +25,68 @@ Cuboctahedron = function (origin, c, bc) {
   /* Draw the side faces */
   if (bc > 0) {
     var sideFace = new Path([
-      center.translate(0.5, 0.5, 0 + bc),
-      center.translate(0.5 - bc, 0.5, 0),
-      center.translate(-0.5 + bc, 0.5, 0),
-      center.translate(-0.5, 0.5, 0 + bc),
-      center.translate(-0.5, 0.5, 1 - c), // left lower corner of top
-      center.translate(-0.5 + c, 0.5, 1), // left top corner
-      center.translate(0.5 - c, 0.5, 1),  // right top corner
-      center.translate(0.5, 0.5, 1 - c),  // right lower corner of top
+      center.translate(w/2, w/2, 0 + bc),
+      center.translate(w/2 - bc, w/2, 0),
+      center.translate(-w/2 + bc, w/2, 0),
+      center.translate(-w/2, w/2, 0 + bc),
+      center.translate(-w/2, w/2, h - c), // left lower corner of top
+      center.translate(-w/2 + c, w/2, h), // left top corner
+      center.translate(w/2 - c, w/2, h),  // right top corner
+      center.translate(w/2, w/2, h - c),  // right lower corner of top
     ]);
   } else {
     // paths with multiple points that are the same current render as black
     var sideFace = new Path([
-      center.translate(0.5, 0.5, 0 + bc),
-      center.translate(-0.5, 0.5, 0 + bc),
-      center.translate(-0.5, 0.5, 1 - c), // left lower corner of top
-      center.translate(-0.5 + c, 0.5, 1), // left top corner
-      center.translate(0.5 - c, 0.5, 1),  // right top corner
-      center.translate(0.5, 0.5, 1 - c),  // right lower corner of top
+      center.translate(w/2, w/2, 0 + bc),
+      center.translate(-w/2, w/2, 0 + bc),
+      center.translate(-w/2, w/2, h - c), // left lower corner of top
+      center.translate(-w/2 + c, w/2, h), // left top corner
+      center.translate(w/2 - c, w/2, h),  // right top corner
+      center.translate(w/2, w/2, h - c),  // right lower corner of top
     ]);
   }
 
   var topTriangleFace = new Path([
-    center.translate(-0.5, 0.5, 1 - c),
-    center.translate(-0.5 + c, 0.5, 1),
-    center.translate(-0.5, 0.5 - c, 1),
+    center.translate(-w/2, w/2, h - c),
+    center.translate(-w/2 + c, w/2, h),
+    center.translate(-w/2, w/2 - c, h),
   ]);
   var bottomTriangleFace = new Path([
-    center.translate(-0.5, 0.5, 0 + bc),
-    center.translate(-0.5 + bc, 0.5, 0),
-    center.translate(-0.5, 0.5 - bc, 0),
+    center.translate(-w/2, w/2, 0 + bc),
+    center.translate(-w/2 + bc, w/2, 0),
+    center.translate(-w/2, w/2 - bc, 0),
   ]);
 
   /* Draw the top */
   var topFace = new Path([
-    center.translate(0.5, 0.5 - c, 1),
-    center.translate(0.5 - c, 0.5, 1),
-    center.translate(-0.5 + c, 0.5, 1),
-    center.translate(-0.5, 0.5 - c, 1),
-    center.translate(-0.5, -0.5 + c, 1),
-    center.translate(-0.5 + c, -0.5, 1),
-    center.translate(0.5 - c, -0.5, 1),
-    center.translate(0.5, -0.5 + c, 1),
+    center.translate(w/2, w/2 - c, h),
+    center.translate(w/2 - c, w/2, h),
+    center.translate(-w/2 + c, w/2, h),
+    center.translate(-w/2, w/2 - c, h),
+    center.translate(-w/2, -w/2 + c, h),
+    center.translate(-w/2 + c, -w/2, h),
+    center.translate(w/2 - c, -w/2, h),
+    center.translate(w/2, -w/2 + c, h),
   ]);
 
   /* Draw the bottom */
   if (bc == 0) {
     var bottomFace = new Path([
-      center.translate(0.5, 0.5 - bc, 0),
-      center.translate(-0.5, 0.5 - bc, 0),
-      center.translate(-0.5, -0.5 + bc, 0),
-      center.translate(0.5, -0.5 + bc, 0),
+      center.translate(w/2, w/2 - bc, 0),
+      center.translate(-w/2, w/2 - bc, 0),
+      center.translate(-w/2, -w/2 + bc, 0),
+      center.translate(w/2, -w/2 + bc, 0),
     ]);
   } else {
     var bottomFace = new Path([
-      center.translate(0.5, 0.5 - bc, 0),
-      center.translate(0.5 - bc, 0.5, 0),
-      center.translate(-0.5 + bc, 0.5, 0),
-      center.translate(-0.5, 0.5 - bc, 0),
-      center.translate(-0.5, -0.5 + bc, 0),
-      center.translate(-0.5 + bc, -0.5, 0),
-      center.translate(0.5 - bc, -0.5, 0),
-      center.translate(0.5, -0.5 + bc, 0),
+      center.translate(w/2, w/2 - bc, 0),
+      center.translate(w/2 - bc, w/2, 0),
+      center.translate(-w/2 + bc, w/2, 0),
+      center.translate(-w/2, w/2 - bc, 0),
+      center.translate(-w/2, -w/2 + bc, 0),
+      center.translate(-w/2 + bc, -w/2, 0),
+      center.translate(w/2 - bc, -w/2, 0),
+      center.translate(w/2, -w/2 + bc, 0),
     ]);
   }
 
@@ -104,7 +108,10 @@ Cuboctahedron = function (origin, c, bc) {
   return s
 }
 
-OutlinedCuboctahedron = function (origin, c, bc) {
+OutlinedCuboctahedron = function (origin, w, h, c, bc) {
+
+  var w = w || 1
+  var h = h || w
 
   // Top corner radius
   if (c == undefined) {
@@ -119,71 +126,71 @@ OutlinedCuboctahedron = function (origin, c, bc) {
   var oc = new Isomer.Object3D()
 
   // Get a basic cuboctahedron
-  var co = new Cuboctahedron(origin, c, bc)
+  var co = new Cuboctahedron(origin, w, h, c, bc)
   oc.push(co)
 
   // Draw crufty outline
   var outline = new Isomer.Object3D()
   outline.push([
     new Path([
-      origin.translate(-0.5, 0.5, 1 - c),
-      origin.translate(-0.5, 0.5, 0 + bc),
-      origin.translate(-0.5, 0.5, 1 - c),
+      origin.translate(-w/2, w/2, h - c),
+      origin.translate(-w/2, w/2, 0 + bc),
+      origin.translate(-w/2, w/2, h - c),
     ]),
     new Path([
-      origin.translate(-0.5, 0.5, 0 + bc),
-      origin.translate(-0.5, 0.5 - bc, 0),
-      origin.translate(-0.5, 0.5, 0 + bc),
+      origin.translate(-w/2, w/2, 0 + bc),
+      origin.translate(-w/2, w/2 - bc, 0),
+      origin.translate(-w/2, w/2, 0 + bc),
     ]),
     new Path([
-      origin.translate(-0.5, 0.5 - bc, 0),
-      origin.translate(-0.5, -0.5 + bc, 0),
-      origin.translate(-0.5, 0.5 - bc, 0),
+      origin.translate(-w/2, w/2 - bc, 0),
+      origin.translate(-w/2, -w/2 + bc, 0),
+      origin.translate(-w/2, w/2 - bc, 0),
     ]),
     new Path([
-      origin.translate(-0.5, -0.5 + bc, 0),
-      origin.translate(-0.5 + bc, -0.5, 0),
-      origin.translate(-0.5, -0.5 + bc, 0),
+      origin.translate(-w/2, -w/2 + bc, 0),
+      origin.translate(-w/2 + bc, -w/2, 0),
+      origin.translate(-w/2, -w/2 + bc, 0),
     ]),
     new Path([
-      origin.translate(-0.5 + bc, -0.5, 0),
-      origin.translate(0.5 - bc, -0.5, 0),
-      origin.translate(-0.5 + bc, -0.5, 0),
+      origin.translate(-w/2 + bc, -w/2, 0),
+      origin.translate(w/2 - bc, -w/2, 0),
+      origin.translate(-w/2 + bc, -w/2, 0),
     ]),
     new Path([
-      origin.translate(0.5 - bc, -0.5, 0),
-      origin.translate(0.5, -0.5, 0 + bc),
-      origin.translate(0.5 - bc, -0.5, 0),
+      origin.translate(w/2 - bc, -w/2, 0),
+      origin.translate(w/2, -w/2, 0 + bc),
+      origin.translate(w/2 - bc, -w/2, 0),
     ]),
     new Path([
-      origin.translate(0.5, -0.5, 0 + bc),
-      origin.translate(0.5, -0.5, 1 - c),
-      origin.translate(0.5, -0.5, 0 + bc),
+      origin.translate(w/2, -w/2, 0 + bc),
+      origin.translate(w/2, -w/2, h - c),
+      origin.translate(w/2, -w/2, 0 + bc),
     ]),
     new Path([
-      origin.translate(0.5, -0.5, 1 - c),
-      origin.translate(0.5, -0.5 + c, 1),
-      origin.translate(0.5, -0.5, 1 - c),
+      origin.translate(w/2, -w/2, h - c),
+      origin.translate(w/2, -w/2 + c, h),
+      origin.translate(w/2, -w/2, h - c),
     ]),
     new Path([
-      origin.translate(0.5, -0.5 + c, 1),
-      origin.translate(0.5, 0.5 - c, 1),
-      origin.translate(0.5, -0.5 + c, 1),
+      origin.translate(w/2, -w/2 + c, h),
+      origin.translate(w/2, w/2 - c, h),
+      origin.translate(w/2, -w/2 + c, h),
     ]),
     new Path([
-      origin.translate(0.5, 0.5 - c, 1),
-      origin.translate(0.5 - c, 0.5, 1),
-      origin.translate(0.5, 0.5 - c, 1),
+      origin.translate(w/2, w/2 - c, h),
+      origin.translate(w/2 - c, w/2, h),
+      origin.translate(w/2, w/2 - c, h),
     ]),
     new Path([
-      origin.translate(0.5 - c, 0.5, 1),
-      origin.translate(-0.5 + c, 0.5, 1),
-      origin.translate(0.5 - c, 0.5, 1),
+      origin.translate(w/2 - c, w/2, h),
+      origin.translate(-w/2 + c, w/2, h),
+      origin.translate(w/2 - c, w/2, h),
     ]),
     new Path([
-      origin.translate(-0.5 + c, 0.5, 1),
-      origin.translate(-0.5, 0.5, 1 - c),
-      origin.translate(-0.5 + c, 0.5, 1),
+      origin.translate(-w/2 + c, w/2, h),
+      origin.translate(-w/2, w/2, h - c),
+      origin.translate(-w/2 + c, w/2, h),
     ]),
   ]);
   oc.push(outline);
@@ -195,10 +202,10 @@ OutlinedCross = function (origin, w, h, c, t) {
 
   var cross = new Isomer.Object3D();
 
-  var w = w || 2; // width
-  var h = h || w; // overall height
-  var c = c || 0; // corner radius
-  var t = t || h; // height of top (centre)
+  w = w || 2; // width
+  h = h || w; // overall height
+  c = c || 0; // corner radius
+  t = t || h; // height of top (centre)
   var faces = [];
 
   /* Draw the bottom */
