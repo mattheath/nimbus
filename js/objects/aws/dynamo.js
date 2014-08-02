@@ -8,8 +8,12 @@
  * DynamoDB returns an icon representing a DynamoDB instance
  */
 DynamoDB = function (origin) {
+	return new OutlinedCross(origin)
+}
 
-	var ddb = new Isomer.Object3D();
+OutlinedCross = function (origin) {
+
+	var cross = new Isomer.Object3D();
 
 	var w = 2;         // width
 	var h = w*0.75;    // overall height
@@ -82,11 +86,11 @@ DynamoDB = function (origin) {
 
 	// Build the shape from our faces
 	var s = new Shape(faces)
-  	s.setColor(new Isomer.Color(195, 195, 195));
-  	ddb.push(s)
+	s.setColor(new Isomer.Color(195, 195, 195));
+	cross.push(s)
 
 	// Add a logo on top
-	ddb.push(new Isomer.Path([
+	cross.push(new Isomer.Path([
 		origin.translate(-0.3, 0.3, t),
 		origin.translate(0.3, 0.3, t),
 		origin.translate(0.3, -0.3, t),
@@ -157,7 +161,7 @@ DynamoDB = function (origin) {
 			origin.translate(-w/2, -w/2 + c, 0),
 		]),
 	])
-	ddb.push(outline)
+	cross.push(outline)
 
-	return ddb
+	return cross
 }
