@@ -14,11 +14,11 @@ Cloudfront = function (origin) {
 
 	// Define final size
 	var y = 1.05;
-	var x = 0.57; //y/2;
-	var z = 1.5; // y * 1.3636363636;
+	var x = y / 1.8421052632;
+	var z = y * 1.4285714286;
 
 	// Defines how large our edging is
-	var edgeSize = 0.1 //y*0.9090909091;
+	var edgeSize = y * 0.09523809524;
 
 	// Main prism is scaled down by the size of the edging
 	var dx = x - edgeSize;
@@ -98,15 +98,17 @@ Cloudfront = function (origin) {
 	cf.push(s)
 
 	// Add a logo to the front face
-	var logocentre = origin.translate(-dx/2, 0,edgeSize + dz/2)
+	var logocentre = origin.translate(-dx/2, 0,edgeSize + dz/2);
+	var logoradius = y * 0.3142857143;
+	var logovertices = y * 19.047619048; // increase vertices as size increases
 	cf.push(new Isomer.Path.Circle(
 		new Isomer.Point(
 			logocentre.x,
 			logocentre.y,
 			logocentre.z
 		),
-		0.33,
-		20
+		logoradius,
+		logovertices
 	).rotateY(logocentre, Math.PI/2));
 
 	// Add outline
