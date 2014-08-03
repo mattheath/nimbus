@@ -1,5 +1,6 @@
 Cuboctahedron = function (origin, w, h, c, bc) {
 
+  var clipBuffer = 0.0000001;
   var w = w || 1
   var h = h || w
   var faces = [];
@@ -7,42 +8,33 @@ Cuboctahedron = function (origin, w, h, c, bc) {
   // Corner sizes, for a full cuboctahedron these should be equal,
   // and set to 0.4999999 to prevent clipping
 
-  // Top corner radius
-  if (c == undefined) {
-    c = 0.4999999;
+  // Fix clipping for Top corner radius
+  if (c == undefined || c >= w/2) {
+    c = w/2 - clipBuffer;
+  }
+  if (c == 0) {
+    c = clipBuffer;
   }
 
-  // Bottom corner radius
-  if (bc == undefined) {
-    bc = 0.4999999;
+  // Fix clipping for Bottom corner radius
+  if (bc == undefined || bc >= w/2) {
+    bc = w/2 - clipBuffer;
   }
-
-  console.log(bc)
+  if (bc == 0) {
+    bc = clipBuffer;
+  }
 
   /* Draw the side faces */
-  if (bc > 0) {
-    var sideFace = new Path([
-      origin.translate(w/2, w/2, 0 + bc),
-      origin.translate(w/2 - bc, w/2, 0),
-      origin.translate(-w/2 + bc, w/2, 0),
-      origin.translate(-w/2, w/2, 0 + bc),
-      origin.translate(-w/2, w/2, h - c), // left lower corner of top
-      origin.translate(-w/2 + c, w/2, h), // left top corner
-      origin.translate(w/2 - c, w/2, h),  // right top corner
-      origin.translate(w/2, w/2, h - c),  // right lower corner of top
-    ]);
-  } else {
-    // paths with multiple points that are the same current render as black
-    var sideFace = new Path([
-      origin.translate(w/2, w/2, 0 + bc),
-      origin.translate(-w/2, w/2, 0 + bc),
-      origin.translate(-w/2, w/2, h - c), // left lower corner of top
-      origin.translate(-w/2 + c, w/2, h), // left top corner
-      origin.translate(w/2 - c, w/2, h),  // right top corner
-      origin.translate(w/2, w/2, h - c),  // right lower corner of top
-    ]);
-  }
-
+  var sideFace = new Path([
+    origin.translate(w/2, w/2, 0 + bc),
+    origin.translate(w/2 - bc, w/2, 0),
+    origin.translate(-w/2 + bc, w/2, 0),
+    origin.translate(-w/2, w/2, 0 + bc),
+    origin.translate(-w/2, w/2, h - c), // left lower corner of top
+    origin.translate(-w/2 + c, w/2, h), // left top corner
+    origin.translate(w/2 - c, w/2, h),  // right top corner
+    origin.translate(w/2, w/2, h - c),  // right lower corner of top
+  ]);
   var topTriangleFace = new Path([
     origin.translate(-w/2, w/2, h - c),
     origin.translate(-w/2 + c, w/2, h),
@@ -67,36 +59,29 @@ Cuboctahedron = function (origin, w, h, c, bc) {
   ]);
 
   /* Draw the bottom */
-  if (bc == 0) {
-    var bottomFace = new Path([
-      origin.translate(w/2, w/2 - bc, 0),
-      origin.translate(-w/2, w/2 - bc, 0),
-      origin.translate(-w/2, -w/2 + bc, 0),
-      origin.translate(w/2, -w/2 + bc, 0),
-    ]);
-  } else {
-    var bottomFace = new Path([
-      origin.translate(w/2, w/2 - bc, 0),
-      origin.translate(w/2 - bc, w/2, 0),
-      origin.translate(-w/2 + bc, w/2, 0),
-      origin.translate(-w/2, w/2 - bc, 0),
-      origin.translate(-w/2, -w/2 + bc, 0),
-      origin.translate(-w/2 + bc, -w/2, 0),
-      origin.translate(w/2 - bc, -w/2, 0),
-      origin.translate(w/2, -w/2 + bc, 0),
-    ]);
-  }
+  var bottomFace = new Path([
+    origin.translate(w/2, w/2 - bc, 0),
+    origin.translate(w/2 - bc, w/2, 0),
+    origin.translate(-w/2 + bc, w/2, 0),
+    origin.translate(-w/2, w/2 - bc, 0),
+    origin.translate(-w/2, -w/2 + bc, 0),
+    origin.translate(-w/2 + bc, -w/2, 0),
+    origin.translate(w/2 - bc, -w/2, 0),
+    origin.translate(w/2, -w/2 + bc, 0),
+  ]);
 
   // Push in all the faces
-  faces.push(bottomFace);
   for (var i = 0; i < 4; i++) {
     faces.push(sideFace.rotateZ(origin, i * Math.PI / 2));
-    faces.push(topTriangleFace.rotateZ(origin, i * Math.PI / 2));
+    if (c > 0) {
+      faces.push(topTriangleFace.rotateZ(origin, i * Math.PI / 2));
+    }
     if (bc > 0) {
       faces.push(bottomTriangleFace.rotateZ(origin, i * Math.PI / 2));
     }
   }
   faces.push(topFace);
+  faces.push(bottomFace);
 
   // Build shape
   var s = new Shape(faces)
@@ -107,17 +92,27 @@ Cuboctahedron = function (origin, w, h, c, bc) {
 
 OutlinedCuboctahedron = function (origin, w, h, c, bc) {
 
+  var clipBuffer = 0.0000001;
   var w = w || 1
   var h = h || w
 
-  // Top corner radius
-  if (c == undefined) {
-    c = 0.4999999;
+  // Corner sizes, for a full cuboctahedron these should be equal,
+  // and set to just under w/2 eg. 0.4999999 to prevent clipping
+
+  // Fix clipping for Top corner radius
+  if (c == undefined || c >= w/2) {
+    c = w/2 - clipBuffer;
+  }
+  if (c == 0) {
+    c = clipBuffer;
   }
 
-  // Bottom corner radius
-  if (bc == undefined) {
-    bc = 0.4999999;
+  // Fix clipping for Bottom corner radius
+  if (bc == undefined || bc >= w/2) {
+    bc = w/2 - clipBuffer;
+  }
+  if (bc == 0) {
+    bc = clipBuffer;
   }
 
   var oc = new Isomer.Object3D()
