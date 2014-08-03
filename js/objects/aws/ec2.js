@@ -72,7 +72,7 @@ EC2Instance = function (origin, size) {
 }
 
 /**
- * Builds a rudimetary S3 object
+ * Builds a rudimentary S3 object
  */
 S3 = function (origin) {
 
@@ -83,6 +83,9 @@ S3 = function (origin) {
   var w = 1.5;
   var h = z = w;
   var l = w * 1.5;
+
+  // Translate origin to centre point
+  origin = origin.translate(-l/2, -w/2, 0)
 
   // Make our base shape
   s.push(Isomer.Shape.Prism(origin, l, w, h),
