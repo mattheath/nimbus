@@ -18,6 +18,9 @@ EC2Instance = function (origin, size) {
   // Make a collection object to hold everything
   var i = new Isomer.Object3D()
 
+  // Set origin to be centred
+  origin = origin.translate(-0.5, -0.5, 0)
+
   // Push in a base prism
   i.push(Isomer.Shape.Prism(origin, 1, 1, z),
     new Isomer.Color(195, 195, 195, 1));

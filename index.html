@@ -81,21 +81,21 @@
         iso.add(new SimpleDB(new Point(8,5.5,0)));
         iso.add(new OpaqueElasticMapReduce(new Point(8,2,0)));
 
-        iso.add(EC2Instance(new Point(3.2, 4, 0), 'large'));
+        iso.add(EC2Instance(new Point(3.7, 4.5, 0), 'large'));
 
         /* Render S3 at back */
         iso.add(S3(new Point(3.2, 1.75, 0)));
 
         /* Add some instances */
-        iso.add(EC2Instance(new Point(1, 5.5, 0), 'medium'));
-        iso.add(EC2Instance(new Point(1, 4.25, 0), 'medium'));
-        iso.add(EC2Instance(new Point(1, 2.25, 0), 'medium'));
-        iso.add(EC2Instance(new Point(1, 1, 0), 'medium'));
+        iso.add(EC2Instance(new Point(1.5, 6, 0), 'medium'));
+        iso.add(EC2Instance(new Point(1.5, 4.75, 0), 'medium'));
+        iso.add(EC2Instance(new Point(1.5, 2.75, 0), 'medium'));
+        iso.add(EC2Instance(new Point(1.5, 1.5, 0), 'medium'));
 
-        iso.add(EC2Instance(new Point(-1, 5.5, 0), 'small'));
-        iso.add(EC2Instance(new Point(-1, 4.25, 0), 'small'));
-        iso.add(EC2Instance(new Point(-1, 2.25, 0), 'small'));
-        iso.add(EC2Instance(new Point(-1, 1, 0), 'small'));
+        iso.add(EC2Instance(new Point(-0.5, 6, 0), 'small'));
+        iso.add(EC2Instance(new Point(-0.5, 4.75, 0), 'small'));
+        iso.add(EC2Instance(new Point(-0.5, 2.75, 0), 'small'));
+        iso.add(EC2Instance(new Point(-0.5, 1.5, 0), 'small'));
 
         /* Other Examples */
         iso.add(ELB(new Point(-2.25, 3.75, 0)));
