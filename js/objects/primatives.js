@@ -36,9 +36,9 @@ Cuboctahedron = function (origin, w, h, c, bc) {
     origin.translate(w/2, w/2, h - c),  // right lower corner of top
   ]);
   var topTriangleFace = new Path([
-    origin.translate(-w/2, w/2, h - c),
-    origin.translate(-w/2 + c, w/2, h),
     origin.translate(-w/2, w/2 - c, h),
+    origin.translate(-w/2 + c, w/2, h),
+    origin.translate(-w/2, w/2, h - c),
   ]);
   var bottomTriangleFace = new Path([
     origin.translate(-w/2, w/2, 0 + bc),

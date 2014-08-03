@@ -27,26 +27,25 @@ Cloudfront = function (origin) {
 
 	// Make edging around bottom
 	var face1 = new Isomer.Path([
-		new Isomer.Point(origin.x - dx/2, origin.y + dy/2, origin.z + edgeSize),
-		new Isomer.Point(origin.x - dx/2, origin.y - dy/2, origin.z + edgeSize),
-		new Isomer.Point(origin.x - dx/2 - edgeSize, origin.y - dy/2, origin.z),
 		new Isomer.Point(origin.x - dx/2 - edgeSize, origin.y + dy/2, origin.z),
-	])
+		new Isomer.Point(origin.x - dx/2 - edgeSize, origin.y - dy/2, origin.z),
+		new Isomer.Point(origin.x - dx/2, origin.y - dy/2, origin.z + edgeSize),
+		new Isomer.Point(origin.x - dx/2, origin.y + dy/2, origin.z + edgeSize),
+	]);
 	var face2 = new Isomer.Path([
 		new Isomer.Point(origin.x - dx/2, origin.y - dy/2 - edgeSize, origin.z),
 		new Isomer.Point(origin.x + dx/2, origin.y - dy/2 - edgeSize, origin.z),
 		new Isomer.Point(origin.x + dx/2, origin.y - dy/2, origin.z + edgeSize),
 		new Isomer.Point(origin.x - dx/2, origin.y - dy/2, origin.z + edgeSize),
-	])
+	]);
 	var triface = new Isomer.Path([
-		new Isomer.Point(origin.x - dx/2, origin.y - dy/2, origin.z + edgeSize),
-		new Isomer.Point(origin.x - dx/2, origin.y - dy/2 - edgeSize, origin.z),
 		new Isomer.Point(origin.x - dx/2 - edgeSize, origin.y - dy/2, origin.z),
-	])
-
+		new Isomer.Point(origin.x - dx/2, origin.y - dy/2 - edgeSize, origin.z),
+		new Isomer.Point(origin.x - dx/2, origin.y - dy/2, origin.z + edgeSize),
+	]);
 
 	// Push in order to prevent clipping
-	cf.push(face1.rotateZ(origin, Math.PI).reverse(), new Isomer.Color(195, 195, 195))
+	cf.push(face1.rotateZ(origin, Math.PI), new Isomer.Color(195, 195, 195))
 	cf.push(face2.rotateZ(origin, Math.PI), new Isomer.Color(195, 195, 195))
 	cf.push(base, new Isomer.Color(195, 195, 195));
 	cf.push(face1, new Isomer.Color(195, 195, 195));
