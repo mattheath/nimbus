@@ -17,9 +17,10 @@ Route53 = function (origin) {
   var h1 = b * (Math.sqrt(3)/2);
   var h2 = h - h1; // final shape height
   var z = a / 1.8; // Height to width ratio
+  var r = a * (Math.sqrt(3)/6); // true centre of an equilateral triangle
 
   // Move the centre to the centre point of the shape
-  var centre = origin.translate(-h2/2, 0, 0);
+  var centre = origin.translate(-r, 0, 0);
 
   // Calculate path vertices & extrude
 
