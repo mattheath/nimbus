@@ -110,7 +110,6 @@ Object3D.prototype.push = function (item, color) {
  */
 Object3D.prototype.translate = function () {
   var args = arguments;
-  console.log(args)
   return new Object3D(this.items.map(function (shape) {
     return shape.translate.apply(shape, args);
   }));
