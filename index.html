@@ -15,6 +15,7 @@
     <!-- Objects -->
     <script src="js/objects/primatives.js"></script>
     <script src="js/objects/aws/analytics.js"></script>
+    <script src="js/objects/aws/appservices.js"></script>
     <script src="js/objects/aws/ec2.js"></script>
     <script src="js/objects/aws/databases.js"></script>
     <script src="js/objects/aws/route53.js"></script>
@@ -193,10 +194,9 @@
         /* Other Examples */
         iso.add(ELB(new Point(-2.25, 3.75, 0)));
         iso.add(Route53(new Point(4, 7, 0)));
-        iso.add(new RDS(new Point(3,0,0)));
-
         iso.add(new Cloudfront(new Point(3.5,9.5,0)));
-
+        iso.add(new SQS(new Point(4.5,0,0)));
+        iso.add(new RDS(new Point(1.5,0,0)));
 
       }
 
