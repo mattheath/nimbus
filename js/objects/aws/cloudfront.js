@@ -60,10 +60,10 @@ Cloudfront = function (origin) {
 
 	// Add a logo on top
 	cf.push(new Isomer.Path([
-		origin.translate(-dx/2, 0.2, z/2 - 0.3 + edgeSize),
-		origin.translate(-dx/2, 0.2, z/2 + 0.3 + edgeSize),
-		origin.translate(-dx/2, -0.2, z/2 + 0.3 + edgeSize),
 		origin.translate(-dx/2, -0.2, z/2 - 0.3 + edgeSize),
+		origin.translate(-dx/2, -0.2, z/2 + 0.3 + edgeSize),
+		origin.translate(-dx/2, 0.2, z/2 + 0.3 + edgeSize),
+		origin.translate(-dx/2, 0.2, z/2 - 0.3 + edgeSize),
 	]), new Isomer.Color(72, 72, 72));
 
 	// Add outline
