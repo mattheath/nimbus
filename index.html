@@ -57,6 +57,61 @@
         this.paths = paths
       }
 
+
+      /**
+       * Returns a new path rotated along the Y axis by a given origin
+       *
+       * Simply a forward to Point#rotateY
+       */
+      Isomer.Path.prototype.rotateY = function () {
+        var args = arguments;
+
+        return new Path(this.points.map(function (point) {
+          return point.rotateY.apply(point, args);
+        }));
+      };
+
+      /**
+       * Rotate about origin on the Y axis
+       */
+      Isomer.Point.prototype.rotateY = function (origin, angle) {
+        var p = this.translate(-origin.x, -origin.y, -origin.z);
+
+        var x = p.x * Math.cos(angle) - p.z * Math.sin(angle);
+        var z = p.x * Math.sin(angle) + p.z * Math.cos(angle);
+        p.x = x;
+        p.z = z;
+
+        return p.translate(origin.x, origin.y, origin.z);
+      };
+
+      /**
+       * Returns a new path rotated along the X axis by a given origin
+       *
+       * Simply a forward to Point#rotateX
+       */
+      Isomer.Path.prototype.rotateX = function () {
+        var args = arguments;
+
+        return new Path(this.points.map(function (point) {
+          return point.rotateX.apply(point, args);
+        }));
+      };
+
+      /**
+       * Rotate about origin on the X axis
+       */
+      Isomer.Point.prototype.rotateX = function (origin, angle) {
+        var p = this.translate(-origin.x, -origin.y, -origin.z);
+
+        var z = p.z * Math.cos(angle) - p.y * Math.sin(angle);
+        var y = p.z * Math.sin(angle) + p.y * Math.cos(angle);
+        p.z = z;
+        p.y = y;
+
+        return p.translate(origin.x, origin.y, origin.z);
+      };
+
       /**
        * Build out a collection object which can contain lots of objects
        */
