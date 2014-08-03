@@ -336,3 +336,132 @@ OutlinedCross = function (origin, w, h, c, t) {
 
   return cross
 }
+
+Frustum = function (origin, w, h, cr, bh) {
+
+  var f = new Isomer.Object3D();
+  var faces = [];
+
+  w = w || 1;     // width
+  h = h || w * 2; // overall height
+  cr = cr || 0.25; // corner radius - how much the top is pulled in
+  bh = bh || 0;   // base height - allows a raised flat edge around the base
+
+  // defend against clipping
+  if (cr >= w/2) {
+    cr = w/2 - 0.0000001
+  }
+
+  // Draw the bottom
+  faces.push(new Path([
+    origin.translate(w/2, -w/2, 0),
+    origin.translate(w/2, w/2, 0),
+    origin.translate(-w/2, w/2, 0),
+    origin.translate(-w/2, -w/2, 0),
+  ]));
+
+  // Draw the top
+  faces.push(new Path([
+    origin.translate(w/2 - cr, -w/2 + cr, h),
+    origin.translate(w/2 - cr, w/2 - cr, h),
+    origin.translate(-w/2 + cr, w/2 - cr, h),
+    origin.translate(-w/2 + cr, -w/2 + cr, h),
+  ]));
+
+  // Draw the side faces for each section which we then rotate into position
+
+  // Base edge face
+  var face1 = new Path([
+    origin.translate(-w/2, -w/2, 0),
+    origin.translate(w/2, -w/2, 0),
+    origin.translate(w/2, -w/2, bh),
+    origin.translate(-w/2, -w/2, bh),
+  ]);
+
+  // Side face
+  var face2 = new Path([
+    origin.translate(w/2 - cr, -w/2 + cr, h),
+    origin.translate(-w/2 + cr, -w/2 + cr, h),
+    origin.translate(-w/2, -w/2, bh),
+    origin.translate(w/2, -w/2, bh),
+  ]);
+
+  // Push in all the faces
+  for (var i = 0; i < 4; i++) {
+    faces.push(face1.rotateZ(origin, i * Math.PI / 2));
+    faces.push(face2.rotateZ(origin, i * Math.PI / 2));
+  }
+
+  // Build the shape from our faces
+  var s = new Shape(faces)
+  s.setColor(new Isomer.Color(195, 195, 195));
+  f.push(s)
+
+  return f
+}
+
+OutlinedFrustum = function (origin, w, h, cr, bh) {
+
+  var of = new Isomer.Object3D();
+
+  w = w || 1;     // width
+  h = h || w * 2; // overall height
+  cr = cr || 0.25; // corner radius - how much the top is pulled in
+  bh = bh || 0;   // base height - allows a raised flat edge around the base
+
+  // defend against clipping
+  if (cr >= w/2) {
+    cr = w/2 - 0.0000001
+  }
+
+  // Get a Frustum
+  of.push(new Frustum(origin, w, h, cr, bh));
+
+  // Draw outline
+  var outline = new Isomer.Object3D()
+  outline.push([
+    new Path([
+      origin.translate(-w/2, w/2, 0),
+      origin.translate(-w/2, -w/2, 0),
+      origin.translate(-w/2, w/2, 0),
+    ]),
+    new Path([
+      origin.translate(-w/2, -w/2, 0),
+      origin.translate(w/2, -w/2, 0),
+      origin.translate(-w/2, -w/2, 0),
+    ]),
+    new Path([
+      origin.translate(w/2, -w/2, 0),
+      origin.translate(w/2, -w/2, bh),
+      origin.translate(w/2, -w/2, 0),
+    ]),
+    new Path([
+      origin.translate(w/2, -w/2, bh),
+      origin.translate(w/2 - cr, -w/2 + cr, h),
+      origin.translate(w/2, -w/2, bh),
+    ]),
+    new Path([
+      origin.translate(w/2 - cr, -w/2 + cr, h),
+      origin.translate(w/2 - cr, w/2 - cr, h),
+      origin.translate(w/2 - cr, -w/2 + cr, h),
+    ]),
+    new Path([
+      origin.translate(w/2 - cr, w/2 - cr, h),
+      origin.translate(-w/2 + cr, w/2 - cr, h),
+      origin.translate(w/2 - cr, w/2 - cr, h),
+    ]),
+    new Path([
+      origin.translate(-w/2 + cr, w/2 - cr, h),
+      origin.translate(-w/2, w/2, bh),
+      origin.translate(-w/2 + cr, w/2 - cr, h),
+    ]),
+    new Path([
+      origin.translate(-w/2, w/2, bh),
+      origin.translate(-w/2, w/2, 0),
+      origin.translate(-w/2, w/2, bh),
+    ]),
+  ]);
+  of.push(outline);
+
+  return of
+}
