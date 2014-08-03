@@ -2,7 +2,9 @@
 /**
  * Builds an EC2 Instance object
  */
-EC2Instance = function (origin, size) {
+EC2Instance = function (origin, size, args) {
+
+  args = args || {};
 
   // Set z based on instance size
   var z = 0.5;
@@ -22,8 +24,9 @@ EC2Instance = function (origin, size) {
   origin = origin.translate(-0.5, -0.5, 0)
 
   // Push in a base prism
+  baseColor = args.baseColor || new Isomer.Color(195, 195, 195, 1);
   i.push(Isomer.Shape.Prism(origin, 1, 1, z),
-    new Isomer.Color(195, 195, 195, 1));
+    baseColor);
 
   // Add a logo on top
   i.push(new Isomer.Path([
