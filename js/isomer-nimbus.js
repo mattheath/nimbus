@@ -9,6 +9,7 @@
  */
 Isomer.Path.prototype.setColor = function (color) {
   this.color = color;
+  return this;
 };
 
 /**
@@ -20,6 +21,7 @@ Isomer.Shape.prototype.setColor = function (color) {
     paths[i].color = color;
   }
   this.paths = paths
+  return this;
 }
 
 /**
