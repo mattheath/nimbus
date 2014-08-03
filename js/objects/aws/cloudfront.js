@@ -10,61 +10,104 @@
 Cloudfront = function (origin) {
 
 	var cf = new Isomer.Object3D();
+	var faces = [];
 
 	// Define final size
-	var y = 1;
-	var x = y/2;
-	var z = y * 1.5;
+	var y = 1.05;
+	var x = 0.57; //y/2;
+	var z = 1.5; // y * 1.3636363636;
 
 	// Defines how large our edging is
-	var edgeSize = y*0.1;
+	var edgeSize = 0.1 //y*0.9090909091;
 
-	// Create base prism, with origin in centre
+	// Main prism is scaled down by the size of the edging
 	var dx = x - edgeSize;
 	var dy = y - edgeSize;
-	var dz = z;
-	var base = Isomer.Shape.Prism(origin, dx, dy, dz).translate(-dx/2, -dy/2, 0);
+	var dz = z - edgeSize;
+
+	// Push in bottom & top faces
+	faces.push(new Isomer.Path([
+		origin.translate(-dx/2 - edgeSize, -dy/2, 0),
+		origin.translate(-dx/2, -dy/2 - edgeSize, 0),
+		origin.translate(dx/2, -dy/2 - edgeSize, 0),
+		origin.translate(dx/2 + edgeSize, -dy/2, 0),
+		origin.translate(dx/2 + edgeSize, dy/2, 0),
+		origin.translate(dx/2, dy/2 + edgeSize, 0),
+		origin.translate(-dx/2, dy/2 + edgeSize, 0),
+		origin.translate(-dx/2 - edgeSize, dy/2, 0),
+	]));
+	faces.push(new Isomer.Path([
+		origin.translate(-dx/2, -dy/2, z),
+		origin.translate(dx/2, -dy/2, z),
+		origin.translate(dx/2, dy/2, z),
+		origin.translate(-dx/2, dy/2, z),
+	]));
 
 	// Make edging around bottom
-	var face1 = new Isomer.Path([
-		new Isomer.Point(origin.x - dx/2 - edgeSize, origin.y + dy/2, origin.z),
-		new Isomer.Point(origin.x - dx/2 - edgeSize, origin.y - dy/2, origin.z),
-		new Isomer.Point(origin.x - dx/2, origin.y - dy/2, origin.z + edgeSize),
-		new Isomer.Point(origin.x - dx/2, origin.y + dy/2, origin.z + edgeSize),
+	var longedge = new Isomer.Path([
+		origin.translate(-dx/2 - edgeSize, dy/2, 0),
+		origin.translate(-dx/2 - edgeSize, -dy/2, 0),
+		origin.translate(-dx/2, -dy/2, edgeSize),
+		origin.translate(-dx/2, dy/2, edgeSize),
 	]);
-	var face2 = new Isomer.Path([
-		new Isomer.Point(origin.x - dx/2, origin.y - dy/2 - edgeSize, origin.z),
-		new Isomer.Point(origin.x + dx/2, origin.y - dy/2 - edgeSize, origin.z),
-		new Isomer.Point(origin.x + dx/2, origin.y - dy/2, origin.z + edgeSize),
-		new Isomer.Point(origin.x - dx/2, origin.y - dy/2, origin.z + edgeSize),
+	var shortedge = new Isomer.Path([
+		origin.translate(-dx/2, -dy/2 - edgeSize, 0),
+		origin.translate(dx/2, -dy/2 - edgeSize, 0),
+		origin.translate(dx/2, -dy/2, edgeSize),
+		origin.translate(-dx/2, -dy/2, edgeSize),
 	]);
 	var triface = new Isomer.Path([
-		new Isomer.Point(origin.x - dx/2 - edgeSize, origin.y - dy/2, origin.z),
-		new Isomer.Point(origin.x - dx/2, origin.y - dy/2 - edgeSize, origin.z),
-		new Isomer.Point(origin.x - dx/2, origin.y - dy/2, origin.z + edgeSize),
+		origin.translate(-dx/2 - edgeSize, -dy/2, 0),
+		origin.translate(-dx/2, -dy/2 - edgeSize, 0),
+		origin.translate(-dx/2, -dy/2, edgeSize),
 	]);
 
-	// Push in order to prevent clipping
-	cf.push(face1.rotateZ(origin, Math.PI), new Isomer.Color(195, 195, 195))
-	cf.push(face2.rotateZ(origin, Math.PI), new Isomer.Color(195, 195, 195))
-	cf.push(base, new Isomer.Color(195, 195, 195));
-	cf.push(face1, new Isomer.Color(195, 195, 195));
-	cf.push(face2, new Isomer.Color(195, 195, 195));
+	// Main prism faces
+	var frontface = new Isomer.Path([
+		origin.translate(-dx/2, dy/2, edgeSize),
+		origin.translate(-dx/2, -dy/2, edgeSize),
+		origin.translate(-dx/2, -dy/2, z),
+		origin.translate(-dx/2, dy/2, z),
+	]);
+	var sideface = new Isomer.Path([
+		origin.translate(-dx/2, -dy/2, edgeSize),
+		origin.translate(dx/2, -dy/2, edgeSize),
+		origin.translate(dx/2, -dy/2, z),
+		origin.translate(-dx/2, -dy/2, z),
+	]);
 
-	// Triangular faces
-	cf.push(triface, new Isomer.Color(195, 195, 195));
-	cf.push(triface.rotateZ(new Isomer.Point(origin.x - dx/2, origin.y - dy/2, 0), -Math.PI/2).translate(0, dy, 0),
-		new Isomer.Color(195, 195, 195))
-	cf.push(triface.rotateZ(new Isomer.Point(origin.x - dx/2, origin.y - dy/2, 0), Math.PI/2).translate(dx, 0, 0).reverse(),
-		new Isomer.Color(195, 195, 195))
+	// Push main faces
+	faces.push(frontface);
+	faces.push(frontface.translate(dx, 0, 0).reverse());
+	faces.push(sideface);
+	faces.push(sideface.translate(0, dy, 0).reverse());
 
-	// Add a logo on top
-	cf.push(new Isomer.Path([
-		origin.translate(-dx/2, -0.2, z/2 - 0.3 + edgeSize),
-		origin.translate(-dx/2, -0.2, z/2 + 0.3 + edgeSize),
-		origin.translate(-dx/2, 0.2, z/2 + 0.3 + edgeSize),
-		origin.translate(-dx/2, 0.2, z/2 - 0.3 + edgeSize),
-	]), new Isomer.Color(72, 72, 72));
+	// Push bottom edging into shape
+	faces.push(longedge.rotateZ(origin, Math.PI))
+	faces.push(shortedge.rotateZ(origin, Math.PI))
+	faces.push(longedge);
+	faces.push(shortedge);
+	faces.push(triface);
+	faces.push(triface.rotateZ(origin.translate(-dx/2, -dy/2, 0), -Math.PI/2).translate(0, dy, 0))
+	faces.push(triface.rotateZ(origin.translate(-dx/2, -dy/2, 0), Math.PI/2).translate(dx, 0, 0))
+	faces.push(triface.rotateZ(origin.translate(-dx/2, -dy/2, 0), Math.PI).translate(dx, dy, 0))
+
+	// Build final shape
+	var s = new Isomer.Shape(faces);
+	s.setColor(new Isomer.Color(195, 195, 195));
+	cf.push(s)
+
+	// Add a logo to the front face
+	var logocentre = origin.translate(-dx/2, 0,edgeSize + dz/2)
+	cf.push(new Isomer.Path.Circle(
+		new Isomer.Point(
+			logocentre.x,
+			logocentre.y,
+			logocentre.z
+		),
+		0.33,
+		20
+	).rotateY(logocentre, Math.PI/2));
 
 	// Add outline
 	var outline = new Isomer.Object3D()
