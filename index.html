@@ -141,7 +141,10 @@
        */
 
       /* Create an Isomer instance with our canvas */
-      var iso = new Isomer(document.getElementById("canvas"));
+      var isomerOptions = {
+        lightPosition: new Isomer.Vector(-1, 2, 3),
+      }
+      var iso = new Isomer(document.getElementById("canvas"), isomerOptions);
 
       /* Some convenient renames */
       var Point = Isomer.Point;
