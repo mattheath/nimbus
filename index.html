@@ -1,1 +1,259 @@
-examples/web-application-hosting.html
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Nimbus: Web Application</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <!-- Underscore and other utilities -->
+    <script src="js/underscore.js"></script>
+
+    <!-- Isomerjs and libraries -->
+    <script src="js/isomer.js"></script>
+    <script src="js/isomer-nimbus.js"></script>
+
+    <!-- Objects -->
+    <script src="js/objects/primatives.js"></script>
+    <script src="js/objects/aws/analytics.js"></script>
+    <script src="js/objects/aws/appservices.js"></script>
+    <script src="js/objects/aws/ec2.js"></script>
+    <script src="js/objects/aws/databases.js"></script>
+    <script src="js/objects/aws/route53.js"></script>
+    <script src="js/objects/aws/cloudfront.js"></script>
+
+    <!-- Reset CSS styles -->
+    <link href="css/reset.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <canvas id="canvas" width="1000" height="700"></canvas>
+    <script>
+      // Cruft to make the canvas fill the screen
+      var ctx = document.getElementById("canvas");
+      if (window.innerWidth > 1000 && window.innerHeight > 700) {
+        ctx.width  = window.innerWidth;
+        ctx.height = window.innerHeight;
+      }
+
+      /* Create an Isomer instance with our canvas */
+      var isomerOptions = {
+        lightPosition: new Isomer.Vector(-1, 2, 3),
+      }
+      var iso = new Isomer(document.getElementById("canvas"), isomerOptions);
+
+      /* Some convenient renames */
+      var Point = Isomer.Point;
+      var Path = Isomer.Path;
+      var Shape = Isomer.Shape;
+      var Color = Isomer.Color;
+
+      var frame = 0;
+
+      function scene() {
+        // Clear canvas, so we avoid smearing due to overdrawing
+        iso.canvas.clear();
+
+        // AZs
+        var azcorner = 0.5;
+        var az = new Path([
+          new Point(10.75, 8.25, 0),
+          new Point(10.75, 3.75, 0),
+          new Point(1 + azcorner, 3.75, 0),
+          new Point(1, 3.75 + azcorner, 0),
+          new Point(1, 8.25, 0),
+        ]).reverse()
+        az.setColor(new Color(195, 195, 195));
+        iso.add(az);
+        iso.add(az.translate(0, -5, 0).setColor(new Color(195, 195, 195)));
+
+        // Auto scaling groups
+        var asg = new Path([
+          new Point(2.75, 7.375, 0),
+          new Point(2.75, -0.375, 0),
+          new Point(1.25, -0.375, 0),
+          new Point(1.25, 7.375, 0),
+        ]).reverse()
+        asg.setColor(new Color(246, 183, 0));
+        iso.add(asg);
+        iso.add(asg.translate(4.75, 0, 0).setColor(new Color(246, 183, 0)));
+
+        // R53 -> CF
+        iso.add(new Path([
+            new Point(-2.5, 3.5, 0),
+            new Point(-4.75, 3.5, 0),
+            new Point(-2.5, 3.5, 0),
+          ]), new Color(50, 50, 50));
+        iso.add(new Path([
+            new Point(-4.75, 3.5, 0),
+            new Point(-4.75, 5.75, 0),
+            new Point(-4.75, 3.5, 0),
+          ]), new Color(50, 50, 50));
+
+        // CF -> ELB
+        iso.add(new Path([
+            new Point(-0.25, 3.5, 0),
+            new Point(-2.5, 3.5, 0),
+            new Point(-0.25, 3.5, 0)
+          ]), new Color(50, 50, 50));
+
+        // ELB 1 Connections
+        var elb1conns = new Isomer.Object3D();
+        elb1conns.push(new Path([
+            new Point(-0.25, 6, 0),
+            new Point(-0.25, 1, 0),
+            new Point(-0.25, 6, 0)
+          ]), new Color(50, 50, 50));
+        elb1conns.push(new Path([
+            new Point(-0.25, 1.625, 0),
+            new Point(1.5, 1.625, 0),
+            new Point(-0.25, 1.625, 0)
+          ]), new Color(50, 50, 50));
+        elb1conns.push(new Path([
+            new Point(-0.25, 5.375, 0),
+            new Point(1.5, 5.375, 0),
+            new Point(-0.25, 5.375, 0)
+          ]), new Color(50, 50, 50));
+        elb1conns.push(new Path([
+            new Point(0.375, 6.625, 0),
+            new Point(1.5, 6.625, 0),
+            new Point(0.375, 6.625, 0),
+          ]), new Color(50, 50, 50));
+        elb1conns.push(new Path([
+            new Point(-0.25, 6, 0),
+            new Point(0.375, 6.625, 0),
+            new Point(-0.25, 6, 0)
+          ]), new Color(50, 50, 50));
+        elb1conns.push(new Path([
+            new Point(0.375, 0.375, 0),
+            new Point(1.5, 0.375, 0),
+            new Point(0.375, 0.375, 0),
+          ]), new Color(50, 50, 50));
+        elb1conns.push(new Path([
+            new Point(-0.25, 1, 0),
+            new Point(0.375, 0.375, 0),
+            new Point(-0.25, 1, 0)
+          ]), new Color(50, 50, 50));
+        iso.add(elb1conns);
+
+        // ELB 2 Connections
+        var elb2conns = elb1conns.translate(5, 0, 0)
+        iso.add(elb2conns);
+
+        var webconns = new Isomer.Object3D();
+        webconns.push(new Path([
+            new Point(3.25, 6.625, 0),
+            new Point(3.25, 0.375, 0),
+            new Point(3.25, 6.625, 0)
+          ]), new Color(50, 50, 50));
+        webconns.push(new Path([
+            new Point(3.25, 1.625, 0),
+            new Point(2.5, 1.625, 0),
+            new Point(3.25, 1.625, 0)
+          ]), new Color(50, 50, 50));
+        webconns.push(new Path([
+            new Point(3.25, 5.375, 0),
+            new Point(2.5, 5.375, 0),
+            new Point(3.25, 5.375, 0)
+          ]), new Color(50, 50, 50));
+        webconns.push(new Path([
+            new Point(3.25, 6.625, 0),
+            new Point(2.5, 6.625, 0),
+            new Point(3.25, 6.625, 0),
+          ]), new Color(50, 50, 50));
+        webconns.push(new Path([
+            new Point(3.25, 0.375, 0),
+            new Point(2.5, 0.375, 0),
+            new Point(3.25, 0.375, 0),
+          ]), new Color(50, 50, 50));
+        iso.add(webconns);
+
+        // Collect to ELB2
+        iso.add(new Path([
+            new Point(3.25, 3.5, 0),
+            new Point(4.75, 3.5, 0),
+            new Point(3.25, 3.5, 0),
+          ]), new Color(50, 50, 50));
+
+        var apiconns = webconns.translate(5.25,0,0)
+        iso.add(apiconns)
+
+        // Connect to RDS master
+        iso.add(new Path([
+            new Point(8.5, 6, 0),
+            new Point(9.5, 6, 0),
+            new Point(8.5, 6, 0),
+          ]), new Color(50, 50, 50));
+
+        // RDS -> RDS
+        iso.add(new Path([
+            new Point(10, 6.5, 0),
+            new Point(10, 1.5, 0),
+            new Point(10, 6.5, 0),
+          ]), new Color(50, 50, 50));
+
+        // CF -> S3
+        iso.add(new Path([
+            new Point(-2.5, 4.025, 0),
+            new Point(-2.5, 6, 0),
+            new Point(-2.5, 4.025, 0),
+          ]), new Color(50, 50, 50));
+
+        iso.add(new Path([
+            new Point(2.5, 9.75, 0),
+            new Point(1.25, 9.75, 0),
+            new Point(2.5, 9.75, 0),
+          ]), new Color(50, 50, 50));
+        iso.add(new Path([
+            new Point(-2.5, 6, 0),
+            new Point(1.25, 9.75, 0),
+            new Point(-2.5, 6, 0),
+          ]), new Color(50, 50, 50));
+
+
+        // Vary alpha of two of the autoscaling web instances
+        var alpha = (Math.sin(frame/5 + Math.PI/2)/2 + 0.5) * 0.8 + 0.2
+
+        // AZ A
+        iso.add(new RDS(new Point(10,6,0)));
+        iso.add(EC2Instance(new Point(6.75, 6.625, 0), 'medium'));
+        iso.add(EC2Instance(new Point(6.75, 5.375, 0), 'medium'));
+        iso.add(EC2Instance(new Point(2, 6.625, 0), 'small',
+          {
+            baseColor: new Color(195,195,195, alpha)
+          }
+        ));
+        iso.add(EC2Instance(new Point(2, 5.375, 0), 'small'));
+
+        // AZ B
+        iso.add(new RDS(new Point(10,1,0)));
+        iso.add(EC2Instance(new Point(6.75, 1.625, 0), 'medium'));
+        iso.add(EC2Instance(new Point(6.75, 0.375, 0), 'medium'));
+        iso.add(EC2Instance(new Point(2, 1.625, 0), 'small'));
+        iso.add(EC2Instance(new Point(2, 0.375, 0), 'small',
+          {
+            baseColor: new Color(195,195,195, alpha)
+          }
+        ));
+
+        // ELBs
+        iso.add(ELB(new Point(4.75, 3.5, 0)));
+        iso.add(ELB(new Point(-0.25, 3.5, 0)));
+
+        // Route53 and Cloudfront entry points
+        iso.add(new Cloudfront(new Point(-2.5,3.5,0)));
+        iso.add(Route53(new Point(-4.75, 5.75, 0)));
+
+        // A little S3
+        iso.add(new S3(new Point(3.625, 9.75, 0)));
+
+        // Increment frame for animation
+        frame += 1;
+      }
+
+      scene()
+      // setInterval(scene, 1000 / 30);
+
+    </script>
+  </body>
+</html>
